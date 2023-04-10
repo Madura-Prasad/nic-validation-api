@@ -35,6 +35,7 @@ public class UserService {
 		user2.setFull_name(user.getFull_name());
 		user2.setAddress(user.getAddress());
 		user2.setMobile(user.getMobile());
+		user2.setNationality(user.getNationality());
 		user2.setNic(user.getNic());
 		return userRepo.save(user2);
 	}
