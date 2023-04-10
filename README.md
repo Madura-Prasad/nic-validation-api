@@ -1,3 +1,15 @@
+# Getting Started with API
+
+This Project was Intergrated with API
+
+### Open Project File (Back-End) in Eclipse or inteliJ.
+### Then Run http://localhost:8080
+### If Show Error Message Open Terminal and Kill Port
+### Firstly Enter Terminal netstat  -ano  |  findstr  <Port Number>
+### After Kill the process using command prompt taskkill  /F  /PID  <Process Id>
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
