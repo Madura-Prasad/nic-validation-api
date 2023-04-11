@@ -48,13 +48,13 @@ public class UserController {
 	@PutMapping("/updateUser/{id}")
 	public String updateUser(@PathVariable Long id, @RequestBody User user) {
 		 userService.updateUser(id, user);
-		 return "User Updated Successfully!";
+		 return "User Updated Successfully!!!";
 	}
 
 	@DeleteMapping("/deleteUser/{id}")
 	public String deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
-		return "User Deleted Successfully!";
+		return "User Deleted Successfully!!!";
 	}
 
 }
