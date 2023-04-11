@@ -31,27 +31,27 @@ export default function ViewUser() {
                     <h2 className="text-center m-4 fw-bold">View User Details</h2>
                     <div className='card'>
                         <div className='card-header'>
-                            <b>User ID : </b>
+                            <b>User ID :- </b>
                             {user.id}
                             <ul className='list-group list-group-flush'>
                                 <li className='list-group-item'>
-                                    <b>Name : </b>
+                                    <b>Name :- </b>
                                     {user.full_name}
                                 </li>
                                 <li className='list-group-item'>
-                                    <b>Mobile number : </b>
+                                    <b>Mobile number :- </b>
                                     {user.mobile}
                                 </li>
                                 <li className='list-group-item'>
-                                    <b>Nationality : </b>
+                                    <b>Nationality :- </b>
                                     {user.nationality}
                                 </li>
                                 <li className='list-group-item'>
-                                    <b>Address : </b>
+                                    <b>Address :- </b>
                                     {user.address}
                                 </li>
                                 <li className='list-group-item'>
-                                    <b>NIC : </b>
+                                    <b>NIC :- </b>
                                     {user.nic}
                                 </li>
                             </ul>
