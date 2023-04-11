@@ -40,6 +40,16 @@ public class UserController {
 				///HttpStatus.OK, userService.getUserById(id));
 		return userService.getUserById(id);
 	}
+	
+	
+	@GetMapping("/getUserCustom/{id}")
+	//Get User by ID
+	public ResponseEntity<Object> getUserByIdCustom(@PathVariable Long id) {
+		return ResponseHandler.responseBuilder("Requested user details are here.", 
+				HttpStatus.OK, userService.getUserById(id));
+	}
+	
+	
 
 	@PostMapping("/saveUser")
 	//Save User
