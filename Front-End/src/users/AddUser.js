@@ -107,11 +107,11 @@ export default function AddUser() {
                         </div>
                         <button
                             type="submit"
-                            className="btn btn-outline-success px-5 fw-bold mx-2"
+                            className="btn btn-outline-success px-4 fw-bold mx-2"
                         >
                             Add
                         </button>
-                        <Link to={"/"} className="btn btn-outline-danger px-3 fw-bold">
+                        <Link to={"/"} className="btn btn-outline-danger fw-bold">
                             Cancel
                         </Link>
                     </form>

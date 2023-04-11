@@ -30,29 +30,28 @@ export default function ViewUser() {
                 <div className=" col-md-6 offset-md-3 border rounded p-4 mt-5 shadow">
                     <h2 className="text-center m-4 fw-bold">View User Details</h2>
                     <div className='card'>
-                        <div className='card-header'>
-                            <b>User ID :- </b>
-                            {user.id}
+                        <div className='card-header '>
                             <ul className='list-group list-group-flush'>
-                                <li className='list-group-item'>
+                                <li className='list-group-item text-start'>
                                     <b>Name :- </b>
                                     {user.full_name}
                                 </li>
-                                <li className='list-group-item'>
+                                <li className='list-group-item text-start'>
                                     <b>Mobile number :- </b>
                                     {user.mobile}
                                 </li>
-                                <li className='list-group-item'>
+                                <li className='list-group-item text-start'>
                                     <b>Nationality :- </b>
                                     {user.nationality}
                                 </li>
-                                <li className='list-group-item'>
+                                <li className='list-group-item text-start'>
                                     <b>Address :- </b>
                                     {user.address}
                                 </li>
-                                <li className='list-group-item'>
+                                <li className='list-group-item text-start'>
                                     <b>NIC :- </b>
                                     {user.nic}
+                                    <button className='mx-5 btn btn-outline-danger fw-bold'>Validate NIC</button>
                                 </li>
                             </ul>
                         </div>

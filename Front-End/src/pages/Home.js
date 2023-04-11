@@ -29,7 +29,7 @@ export default function Home() {
                 <table className="table table-hover">
                     <thead className="table-dark text-light shadow ">
                         <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Mobile</th>
                             <th scope="col">Nationality</th>
@@ -48,9 +48,9 @@ export default function Home() {
                                 <td className="fw-bold">{user.address}</td>
                                 <td className="fw-bold">{user.nic}</td>
                                 <td>
-                                    <Link to={`/viewUser/${user.id}`} className="btn btn-outline-secondary px-3 fw-bold">View</Link>
-                                    <Link to={`/editUser/${user.id}`} className="btn btn-outline-warning px-3 fw-bold mx-2">Edit</Link>
-                                    <button className="btn btn-outline-danger px-3 fw-bold mx-2"
+                                    <Link to={`/viewUser/${user.id}`} className="btn btn-outline-secondary  fw-bold">View</Link>
+                                    <Link to={`/editUser/${user.id}`} className="btn btn-outline-warning fw-bold mx-2">Edit</Link>
+                                    <button className="btn btn-outline-danger fw-bold mx-2"
                                     onClick={()=>deleteUser(user.id)}
                                     >Delete</button>
                                 </td>
