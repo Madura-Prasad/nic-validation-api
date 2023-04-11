@@ -8,7 +8,7 @@ public class NicUpdateApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NicUpdateApplication.class, args);
-		System.out.println("Success");
+		System.out.println("Started");
 	}
 
 }

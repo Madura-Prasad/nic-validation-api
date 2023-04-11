@@ -3,7 +3,7 @@
 This Project was Intergrated with API
 
 Open Project File (Back-End) in Eclipse or inteliJ. \
-hen Run http://localhost:8080 \
+After Run Project http://localhost:8080 \
 If show Error Message Open Terminal and Kill Port \
 Firstly Enter Terminal netstat  -ano  |  findstr  <Port Number> \
 After Kill the process using command prompt taskkill  /F  /PID  <Process Id> 

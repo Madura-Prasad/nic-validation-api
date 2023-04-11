@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.User;
+import com.example.demo.response.ResponseHandler;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -30,23 +33,27 @@ public class UserController {
 	}
 
 	@GetMapping("/getUser/{id}")
-	public User getUserById(@PathVariable Long id) {
-		return userService.getUserById(id);
+	public ResponseEntity<Object> getUserById(@PathVariable Long id) {
+		return ResponseHandler.responseBuilder("Requested user details are here.", 
+				HttpStatus.OK, userService.getUserById(id));
 	}
 
 	@PostMapping("/saveUser")
-	public User saveUser(@RequestBody User user) {
-		return userService.saveuser(user);
+	public String saveUser(@RequestBody User user) {
+		 userService.saveuser(user);
+		 return "User Saved Successfully!";
 	}
 
 	@PutMapping("/updateUser/{id}")
-	public User updateUser(@PathVariable Long id, @RequestBody User user) {
-		return userService.updateUser(id, user);
+	public String updateUser(@PathVariable Long id, @RequestBody User user) {
+		 userService.updateUser(id, user);
+		 return "User Updated Successfully!";
 	}
 
 	@DeleteMapping("/deleteUser/{id}")
-	public void deleteUser(@PathVariable Long id) {
+	public String deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
+		return "User Deleted Successfully!";
 	}
 
 }
