@@ -28,11 +28,13 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/getUsers")
+	//Get All Users
 	public List<User> getAllUser() {
 		return userService.getAll();
 	}
 
 	@GetMapping("/getUser/{id}")
+	//Get User by ID
 	public User getUserById(@PathVariable Long id) {
 		//return ResponseHandler.responseBuilder("Requested user details are here.", 
 				///HttpStatus.OK, userService.getUserById(id));
@@ -40,18 +42,21 @@ public class UserController {
 	}
 
 	@PostMapping("/saveUser")
+	//Save User
 	public String saveUser(@RequestBody User user) {
 		 userService.saveuser(user);
 		 return "User Saved Successfully!";
 	}
 
 	@PutMapping("/updateUser/{id}")
+	//Update User by ID
 	public String updateUser(@PathVariable Long id, @RequestBody User user) {
 		 userService.updateUser(id, user);
 		 return "User Updated Successfully!!!";
 	}
 
 	@DeleteMapping("/deleteUser/{id}")
+	//Delete User by ID
 	public String deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);
 		return "User Deleted Successfully!!!";
