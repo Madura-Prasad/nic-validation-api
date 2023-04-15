@@ -51,6 +51,8 @@ export default function ViewUser() {
                                 <li className='list-group-item text-start'>
                                     <b>NIC :- </b>
                                     {user.nic}
+                                </li>
+                                <li className='list-group-item'>
                                     <button className='mx-5 btn btn-outline-danger fw-bold'>Validate NIC</button>
                                 </li>
                             </ul>
