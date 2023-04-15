@@ -50,7 +50,6 @@ public class UserController {
 	}
 	
 	
-
 	@PostMapping("/saveUser")
 	//Save User
 	public String saveUser(@RequestBody User user) {
