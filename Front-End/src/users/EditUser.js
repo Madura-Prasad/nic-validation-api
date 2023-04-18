@@ -28,12 +28,12 @@ export default function EditUser() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.put(`http://localhost:8080/api/v1/updateUser/${id}`, user);
+        await axios.put(`http://localhost:8070/api/v1/updateUser/${id}`, user);
         navigate("/");
     };
 
     const loadUser = async () => {
-        const result = await axios.get(`http://localhost:8080/api/v1/getUser/${id}`)
+        const result = await axios.get(`http://localhost:8070/api/v1/getUser/${id}`)
         SetUser(result.data)
     }
 

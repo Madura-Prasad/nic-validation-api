@@ -20,7 +20,7 @@ export default function ViewUser() {
     }, [])
 
     const loadUser = async () => {
-        const result = await axios.get(`http://localhost:8080/api/v1/getUser/${id}`)
+        const result = await axios.get(`http://localhost:8070/api/v1/getUser/${id}`)
         setUser(result.data)
     }
 

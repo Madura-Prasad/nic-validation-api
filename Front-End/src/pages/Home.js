@@ -13,13 +13,13 @@ export default function Home() {
     });
 
     const loadUsers = async () => {
-        const result = await axios.get("http://localhost:8080/api/v1/getUsers");
+        const result = await axios.get("http://localhost:8070/api/v1/getUsers");
         setUsers(result.data);
     };
 
 
     const deleteUser = async (id) => {
-        await axios.delete(`http://localhost:8080/api/v1/deleteUser/${id}`)
+        await axios.delete(`http://localhost:8070/api/v1/deleteUser/${id}`)
         loadUsers()
     }
 
