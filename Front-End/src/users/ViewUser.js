@@ -33,24 +33,24 @@ export default function ViewUser() {
                         <div className='card-header '>
                             <ul className='list-group list-group-flush'>
                                 <li className='list-group-item text-start'>
-                                    <b>Name :- </b>
-                                    {user.full_name}
+                                    <b className='fw-semibold'>Name :- </b>
+                                    <b>{user.full_name}</b>
                                 </li>
                                 <li className='list-group-item text-start'>
-                                    <b>Mobile number :- </b>
-                                    {user.mobile}
+                                    <b className='fw-semibold'>Mobile number :- </b>
+                                    <b>{user.mobile}</b>
                                 </li>
                                 <li className='list-group-item text-start'>
-                                    <b>Nationality :- </b>
-                                    {user.nationality}
+                                    <b className='fw-semibold'>Nationality :- </b>
+                                    <b>{user.nationality}</b>
                                 </li>
                                 <li className='list-group-item text-start'>
-                                    <b>Address :- </b>
-                                    {user.address}
+                                    <b className='fw-semibold'>Address :- </b>
+                                    <b>{user.address}</b>
                                 </li>
                                 <li className='list-group-item text-start'>
-                                    <b>NIC :- </b>
-                                    {user.nic}
+                                    <b className='fw-semibold'>NIC :- </b>
+                                    <b>{user.nic}</b>
                                 </li>
                                 <li className='list-group-item'>
                                     <button className='mx-5 btn btn-outline-danger fw-bold'>Validate NIC</button>
