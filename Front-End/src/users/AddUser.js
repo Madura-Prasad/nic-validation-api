@@ -21,7 +21,7 @@ export default function AddUser() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/api/v1/saveUser", user);
+        await axios.post("http://localhost:8070/api/v1/saveUser", user);
         navigate("/");
     };
 
@@ -36,6 +36,7 @@ export default function AddUser() {
                                 Enter Your Name :
                             </label>
                             <input
+                            required
                                 type={"text"}
                                 class="form-control fw-bold"
                                 id="exampleFormControlInput1"
