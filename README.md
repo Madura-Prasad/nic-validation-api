@@ -5,8 +5,8 @@ This Project was Intergrated with API
 Open Project File (Back-End) in Eclipse or inteliJ. \
 After Run Project http://localhost:8070 \
 If show Error Message ("Port 8070 required by Tomcat v8.0 Server at localhost is already in use") Open Terminal and Kill Port \
-Firstly Enter Terminal netstat  -ano  |  findstr  <Port Number> \
-After Kill the process using command prompt taskkill  /F  /PID  <Process Id> 
+Firstly Enter Terminal netstat  -ano  |  findstr  Port Number \
+After Kill the process using command prompt taskkill  /F  /PID  Process Id
 
 
 
