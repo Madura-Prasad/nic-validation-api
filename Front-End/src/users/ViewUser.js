@@ -52,8 +52,17 @@ export default function ViewUser() {
                                     <b className='fw-semibold'>NIC :- </b>
                                     <b>{user.nic}</b>
                                 </li>
-                                <li className='list-group-item'>
-                                    <button className='mx-5 btn btn-outline-danger fw-bold'>Validate NIC</button>
+                                <li className='list-group-item text-start'>
+                                    <b className='fw-semibold'>Birthday :- </b>
+                                    <b>{user.birthday}</b>
+                                </li>
+                                <li className='list-group-item text-start'>
+                                    <b className='fw-semibold'>Age :- </b>
+                                    <b>{user.age}</b>
+                                </li>
+                                <li className='list-group-item text-start'>
+                                    <b className='fw-semibold'>Gender :- </b>
+                                    <b>{user.gender}</b>
                                 </li>
                             </ul>
                         </div>

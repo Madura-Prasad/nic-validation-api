@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,9 +28,18 @@ public class User {
 
 	@Column(name = "nic")
 	private String nic;
-	
-	@Column(name= "nationality")
+
+	@Column(name = "nationality")
 	private String nationality;
+
+	@Column(name = "birthday")
+	private LocalDate  birthday;
+
+	@Column(name = "age")
+	private Integer age;
+
+	@Column(name = "gender")
+	private String gender;
 
 	public long getId() {
 		return Id;
@@ -44,7 +56,6 @@ public class User {
 	public void setFull_name(String full_name) {
 		this.full_name = full_name;
 	}
-
 
 	public String getAddress() {
 		return address;
@@ -78,7 +89,32 @@ public class User {
 		this.nationality = nationality;
 	}
 
-	public User(long id, String full_name, String address, String mobile, String nic, String nationality) {
+	public LocalDate  getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate  birthday) {
+		this.birthday = birthday;
+	}
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public User(long id, String full_name, String address, String mobile, String nic, String nationality, LocalDate  birthday,
+			Integer age, String gender) {
 		super();
 		Id = id;
 		this.full_name = full_name;
@@ -86,6 +122,9 @@ public class User {
 		this.mobile = mobile;
 		this.nic = nic;
 		this.nationality = nationality;
+		this.birthday = birthday;
+		this.age = age;
+		this.gender = gender;
 	}
 
 	public User() {

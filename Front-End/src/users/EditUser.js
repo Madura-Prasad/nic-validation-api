@@ -15,7 +15,6 @@ export default function EditUser() {
         nic: "",
     });
 
-
     const [error, setError] = useState({
         full_name: "",
         mobile: "",
@@ -24,35 +23,30 @@ export default function EditUser() {
         nic: "",
     });
 
-
     const { full_name, mobile, nationality, address, nic } = user;
 
     const onInputChange = (e) => {
         SetUser({ ...user, [e.target.name]: e.target.value });
     };
 
-
     useEffect(() => {
         loadUser();
-    },[]);
+    }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
         if (validateFields()) {
-        await axios.put(`http://localhost:8070/api/v1/updateUser/${id}`, user);
-        navigate("/");
+            await axios.put(`http://localhost:8070/api/v1/updateUser/${id}`, user);
+            navigate("/");
         }
     };
-
-
-
 
     const validateFields = () => {
         let isValid = true;
         let full_nameError = "";
         let mobileError = "";
         let nationalityError = "";
-        let addressError= "";
+        let addressError = "";
         let nicError = "";
 
         // Mobile number validation
@@ -76,33 +70,34 @@ export default function EditUser() {
             full_nameError = "Please Enter a Valid Name";
         }
 
-
         //Nationality validation
-        if (nationality.length==0) {
+        if (nationality.length === 0) {
             isValid = false;
             nationalityError = "Please Enter Nationality";
         }
 
         //Address validation
-        if (address.length==0) {
+        if (address.length === 0) {
             isValid = false;
             addressError = "Please Enter Address";
         }
 
-        setError({ mobile: mobileError, nic: nicError, full_name: full_nameError ,nationality:nationalityError,address:addressError});
+        setError({
+            mobile: mobileError,
+            nic: nicError,
+            full_name: full_nameError,
+            nationality: nationalityError,
+            address: addressError,
+        });
         return isValid;
     };
 
-
-
-
-
-
-
     const loadUser = async () => {
-        const result = await axios.get(`http://localhost:8070/api/v1/getUser/${id}`)
-        SetUser(result.data)
-    }
+        const result = await axios.get(
+            `http://localhost:8070/api/v1/getUser/${id}`
+        );
+        SetUser(result.data);
+    };
 
     return (
         <div className="container">
@@ -123,8 +118,10 @@ export default function EditUser() {
                                 value={full_name}
                                 onChange={(e) => onInputChange(e)}
                             />
-                             {error.full_name && (
-                                <div className="text-danger fw-semibold ">{error.full_name}</div>
+                            {error.full_name && (
+                                <div className="text-danger fw-semibold ">
+                                    {error.full_name}
+                                </div>
                             )}
                         </div>
 
@@ -133,7 +130,7 @@ export default function EditUser() {
                                 Enter Your Mobile Number :
                             </label>
                             <input
-                                type={"number"}
+                                type={"text"}
                                 class="form-control fw-bold"
                                 id="exampleFormControlInput1"
                                 placeholder="Enter Here Mobile Number"
@@ -141,7 +138,7 @@ export default function EditUser() {
                                 value={mobile}
                                 onChange={(e) => onInputChange(e)}
                             />
-                             {error.mobile && (
+                            {error.mobile && (
                                 <div className="text-danger fw-semibold ">{error.mobile}</div>
                             )}
                         </div>
@@ -159,8 +156,10 @@ export default function EditUser() {
                                 value={nationality}
                                 onChange={(e) => onInputChange(e)}
                             />
-                             {error.nationality && (
-                                <div className="text-danger fw-semibold ">{error.nationality}</div>
+                            {error.nationality && (
+                                <div className="text-danger fw-semibold ">
+                                    {error.nationality}
+                                </div>
                             )}
                         </div>
 
@@ -177,7 +176,7 @@ export default function EditUser() {
                                 value={address}
                                 onChange={(e) => onInputChange(e)}
                             />
-                             {error.address && (
+                            {error.address && (
                                 <div className="text-danger fw-semibold ">{error.address}</div>
                             )}
                         </div>
@@ -195,7 +194,7 @@ export default function EditUser() {
                                 value={nic}
                                 onChange={(e) => onInputChange(e)}
                             />
-                             {error.nic && (
+                            {error.nic && (
                                 <div className="text-danger fw-semibold ">{error.nic}</div>
                             )}
                         </div>

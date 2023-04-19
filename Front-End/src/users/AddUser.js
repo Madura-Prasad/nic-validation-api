@@ -66,13 +66,13 @@ export default function AddUser() {
 
 
         //Nationality validation
-        if (nationality.length==0) {
+        if (nationality.length===0) {
             isValid = false;
             nationalityError = "Please Enter Nationality";
         }
 
         //Address validation
-        if (address.length==0) {
+        if (address.length===0) {
             isValid = false;
             addressError = "Please Enter Address";
         }
