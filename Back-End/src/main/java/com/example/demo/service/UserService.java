@@ -36,11 +36,17 @@ public class UserService {
 		int birthYear = 0;
 		int days = 0;
 		int genderCode = 0;
-		if (nicNumber.length() == 10) {
+		
+		var oldnic= Integer.parseInt( nicNumber.substring(2, 5));
+		var newnic = Integer.parseInt( nicNumber.substring(4, 7));
+		
+		
+		if (nicNumber.length() == 10 && (oldnic <= 366 || (oldnic >= 501 && oldnic <= 866))) {
 			birthYear = 1900 + Integer.parseInt(nicNumber.substring(0, 2));
 			days = Integer.parseInt(nicNumber.substring(2, 5));
 			genderCode = Integer.parseInt(nicNumber.substring(2,5));
-		} else if (nicNumber.length() == 12) {
+			
+		} else if (nicNumber.length() == 12 && (newnic <= 366 || (newnic >= 501 && newnic <= 866))) {
 			birthYear = Integer.parseInt(nicNumber.substring(0, 4));
 			days = Integer.parseInt(nicNumber.substring(4, 7));
 			genderCode = Integer.parseInt(nicNumber.substring(4,7));
@@ -74,7 +80,6 @@ public class UserService {
 		user2.setAddress(user.getAddress());
 		user2.setMobile(user.getMobile());
 		user2.setNationality(user.getNationality());
-		user2.setNic(user.getNic());
 		return userRepo.save(user2);
 	}
 	

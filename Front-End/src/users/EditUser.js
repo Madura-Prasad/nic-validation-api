@@ -186,7 +186,7 @@ export default function EditUser() {
                                 Enter Your NIC :
                             </label>
                             <input
-                                type={"text"}
+                                type={"text"} disabled
                                 class="form-control fw-bold"
                                 id="exampleFormControlInput1"
                                 placeholder="Enter Here NIC"
