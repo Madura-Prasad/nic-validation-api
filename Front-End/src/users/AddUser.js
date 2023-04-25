@@ -40,44 +40,55 @@ export default function AddUser() {
         let full_nameError = "";
         let mobileError = "";
         let nationalityError = "";
-        let addressError= "";
+        let addressError = "";
         let nicError = "";
 
         // Mobile number validation
-        const mobileRegex = /^(?:7|0|(?:\+94))[0-9]{9,10}$/;
+        const mobileRegex = /^[0-9]{10}$/;
         if (!mobileRegex.test(mobile)) {
             isValid = false;
-            mobileError = "Please Enter a Valid Mobile Number";
+            mobileError = "Please Enter a Valid Mobile Number!";
         }
 
         // NIC validation
         const nicRegex = /^([0-9]{9}[v|V]|[0-9]{12})$/;
         if (!nicRegex.test(nic)) {
             isValid = false;
-            nicError = "Please Enter a Valid NIC Number";
+            nicError = "Invalid NIC Number!";
+        }else if(nic.substring(2,5) <= 366 || (nic.substring(2,5) >= 501 && nic.substring(2,5) <= 866)){
+            isValid = false;
+            nicError = "";
+        }else {
+            isValid = false;
+            nicError = "Invalid NIC Number!";
         }
 
         // Name validation
         const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
         if (!nameRegex.test(full_name)) {
             isValid = false;
-            full_nameError = "Please Enter a Valid Name";
+            full_nameError = "Please Enter a Valid Name!";
         }
 
-
         //Nationality validation
-        if (nationality.length===0) {
+        if (nationality.length === 0) {
             isValid = false;
-            nationalityError = "Please Enter Nationality";
+            nationalityError = "Please Enter Nationality!";
         }
 
         //Address validation
-        if (address.length===0) {
+        if (address.length === 0) {
             isValid = false;
-            addressError = "Please Enter Address";
+            addressError = "Please Enter Address!";
         }
 
-        setError({ mobile: mobileError, nic: nicError, full_name: full_nameError ,nationality:nationalityError,address:addressError});
+        setError({
+            mobile: mobileError,
+            nic: nicError,
+            full_name: full_nameError,
+            nationality: nationalityError,
+            address: addressError,
+        });
         return isValid;
     };
 
@@ -101,7 +112,9 @@ export default function AddUser() {
                                 onChange={(e) => onInputChange(e)}
                             />
                             {error.full_name && (
-                                <div className="text-danger fw-semibold ">{error.full_name}</div>
+                                <div className="text-danger fw-semibold ">
+                                    {error.full_name}
+                                </div>
                             )}
                         </div>
 
@@ -136,8 +149,10 @@ export default function AddUser() {
                                 value={nationality}
                                 onChange={(e) => onInputChange(e)}
                             />
-                              {error.nationality && (
-                                <div className="text-danger fw-semibold">{error.nationality}</div>
+                            {error.nationality && (
+                                <div className="text-danger fw-semibold">
+                                    {error.nationality}
+                                </div>
                             )}
                         </div>
 

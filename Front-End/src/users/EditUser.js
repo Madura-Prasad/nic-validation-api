@@ -50,11 +50,12 @@ export default function EditUser() {
         let nicError = "";
 
         // Mobile number validation
-        const mobileRegex = /^(?:7|0|(?:\+94))[0-9]{9,10}$/;
+        const mobileRegex = /^[0-9]{10}$/;
         if (!mobileRegex.test(mobile)) {
             isValid = false;
             mobileError = "Please Enter a Valid Mobile Number";
         }
+
 
         // NIC validation
         const nicRegex = /^([0-9]{9}[v|V]|[0-9]{12})$/;
