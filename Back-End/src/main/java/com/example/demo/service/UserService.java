@@ -26,43 +26,7 @@ public class UserService {
 	}
 
 	public User saveuser(User user) {
-
-		/*String nicNumber = user.getNic();
-
-		// extract the birth year, days, and gender code from the NIC number
-		int birthYear = 0;
-		int days = 0;
-		int genderCode = 0;
-
-		if (nicNumber.length() == 10 && (Integer.parseInt(nicNumber.substring(2, 5)) <= 366 || (Integer.parseInt(nicNumber.substring(2, 5)) >= 501 && Integer.parseInt(nicNumber.substring(2, 5)) <= 866))) {
-			birthYear = 1900 + Integer.parseInt(nicNumber.substring(0, 2));
-			days = Integer.parseInt(nicNumber.substring(2, 5));
-			genderCode = Integer.parseInt(nicNumber.substring(2, 5));
-		} else if (nicNumber.length() == 12 && (Integer.parseInt(nicNumber.substring(4, 7)) <= 366 || (Integer.parseInt(nicNumber.substring(4, 7)) >= 501 && Integer.parseInt(nicNumber.substring(4, 7)) <= 866))) {
-			birthYear = Integer.parseInt(nicNumber.substring(0, 4));
-			days = Integer.parseInt(nicNumber.substring(4, 7));
-			genderCode = Integer.parseInt(nicNumber.substring(4, 7));
-		} else {
-			throw new IllegalArgumentException("Invalid NIC number: " + nicNumber);
-		}
-
-		// calculate the birth date based on the days code
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyDDD");
-		LocalDate birthDate = LocalDate.parse(String.format("%04d%03d", birthYear, days), formatter);
-
-		// calculate the age
-		int age = Period.between(birthDate, LocalDate.now()).getYears();
-
-		// determine the gender
-		String gender = genderCode > 500 ? "Female" : "Male";
-
-		// set the birthday, age, and gender on the NIC object
-		user.setBirthday(birthDate);
-		user.setAge(age);
-		user.setGender(gender);*/
-		
-		
-		
+	
 		String nicNumber = user.getNic();
 
 		// extract the birth year, days, and gender code from the NIC number
