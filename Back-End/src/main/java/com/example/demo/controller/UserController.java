@@ -1,8 +1,5 @@
 package com.example.demo.controller;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,22 +25,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@GetMapping("/getUsers")
-	// Get All Users
-	public List<User> getAllUser() {
-		return userService.getAll();
-	}
-	
-	
-	
 	@GetMapping("/getUser")
 	// Get User by ID
 	public ResponseEntity<Object> getUser() {
-		return ResponseHandler.responseBuilder("Requested user details are here.", HttpStatus.OK,
-				userService.getAll());
+		return ResponseHandler.responseBuilder("Requested user details are here.", HttpStatus.OK, userService.getAll());
 	}
-	
-	
 
 	@GetMapping("/getUser/{id}")
 	// Get User by ID
@@ -60,16 +46,13 @@ public class UserController {
 
 	@PostMapping("/saveUser")
 	// Save User
-	public String saveUser(@RequestBody User user) {
-		userService.saveuser(user);
-		return ("User Saved Successfully!");
+	public ResponseEntity<Object> getUser(@RequestBody User user) {
+		return ResponseHandler.responseBuilder("User Saved Successfully!", HttpStatus.OK, userService.saveuser(user));
 	}
 
 	@PutMapping("/updateUser/{id}")
-	// Update User by ID
-	public String updateUser(@PathVariable Long id, @RequestBody User user) {
-		userService.updateUser(id, user);
-		return "User Updated Successfully!!!";
+	public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody User user) {
+		return ResponseHandler.responseBuilder("User U Successfully!", HttpStatus.OK, userService.updateUser(id, user));
 	}
 
 	@DeleteMapping("/deleteUser/{id}")
