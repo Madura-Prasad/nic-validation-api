@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.exception.NICNotFoundException;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepo;
 
@@ -22,7 +24,9 @@ public class UserService {
 	}
 
 	public User getUserById(Long id) {
-		return userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not Found."));
+		if(userRepo.findById(id).isEmpty())
+			throw new UserNotFoundException("Requested User Not Found");
+		return userRepo.findById(id).get();
 	}
 
 	public User saveuser(User user) {
@@ -46,7 +50,7 @@ public class UserService {
 		    days = Integer.parseInt(nicNumber.substring(4, 7));
 		    genderCode = Integer.parseInt(nicNumber.substring(4, 7));
 		} else {
-		    throw new IllegalArgumentException("Invalid NIC number: " + nicNumber);
+		    throw new NICNotFoundException("Invalid NIC number: " + nicNumber);
 		}
 
 		// adjust the day value based on the birth year and the type of NIC number

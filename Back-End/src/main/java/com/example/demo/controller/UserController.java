@@ -52,7 +52,7 @@ public class UserController {
 
 	@PutMapping("/updateUser/{id}")
 	public ResponseEntity<Object> updateUser(@PathVariable Long id, @RequestBody User user) {
-		return ResponseHandler.responseBuilder("User U Successfully!", HttpStatus.OK, userService.updateUser(id, user));
+		return ResponseHandler.responseBuilder("User Upadated Successfully!", HttpStatus.OK, userService.updateUser(id, user));
 	}
 
 	@DeleteMapping("/deleteUser/{id}")
