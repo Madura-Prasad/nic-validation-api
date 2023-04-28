@@ -79,15 +79,20 @@ public class UserService {
 	}
 
 	public User updateUser(Long id, User user) {
-		User user2 = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User not Found."));
+		if(userRepo.findById(id).isEmpty())
+			throw new UserNotFoundException("Requested User Not Found");
+		User user2 = userRepo.findById(id).get();
 		user2.setFull_name(user.getFull_name());
 		user2.setAddress(user.getAddress());
 		user2.setMobile(user.getMobile());
 		user2.setNationality(user.getNationality());
+		
 		return userRepo.save(user2);
 	}
 
 	public void deleteUser(Long id) {
+		if(userRepo.findById(id).isEmpty())
+			throw new UserNotFoundException("Requested User Not Found");
 		userRepo.deleteById(id);
 	}
 
