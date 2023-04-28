@@ -56,13 +56,6 @@ export default function AddUser() {
       mobileError = 'Please Enter a Valid Mobile Number'
     }
 
-    // NIC validation
-    const nicRegex = /^([0-9]{9}[v|V]|[0-9]{12})$/
-    if (!nicRegex.test(nic)) {
-      isValid = false
-      nicError = 'Please Enter a Valid NIC Number'
-    }
-
     // Name validation
     const nameRegex = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/
     if (!nameRegex.test(full_name)) {

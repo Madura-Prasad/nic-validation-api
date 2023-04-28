@@ -33,6 +33,17 @@ public class UserController {
 	public List<User> getAllUser() {
 		return userService.getAll();
 	}
+	
+	
+	
+	@GetMapping("/getUser")
+	// Get User by ID
+	public ResponseEntity<Object> getUser() {
+		return ResponseHandler.responseBuilder("Requested user details are here.", HttpStatus.OK,
+				userService.getAll());
+	}
+	
+	
 
 	@GetMapping("/getUser/{id}")
 	// Get User by ID

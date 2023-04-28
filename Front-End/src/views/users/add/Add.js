@@ -51,8 +51,13 @@ export default function AddUser() {
     }
 
     // NIC validation
-    const nicRegex = /^([0-9]{9}[v|V]|[0-9]{12})$/
-    if (!nicRegex.test(nic)) {
+    if (nic.substring(2, 5) <= 366 || (nic.substring(2, 5) >= 501 && nic.substring(2, 5) <= 866)) {
+      const nicRegex = /^([0-9]{9}[v|V]|[0-9]{12})$/
+      if (!nicRegex.test(nic)) {
+        isValid = false
+        nicError = 'Invalid NIC Number!'
+      }
+    } else {
       isValid = false
       nicError = 'Invalid NIC Number!'
     }
