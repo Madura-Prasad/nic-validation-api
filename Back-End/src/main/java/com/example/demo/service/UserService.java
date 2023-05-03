@@ -50,7 +50,7 @@ public class UserService {
 		    days = Integer.parseInt(nicNumber.substring(4, 7));
 		    genderCode = Integer.parseInt(nicNumber.substring(4, 7));
 		} else {
-		    throw new NICNotFoundException("Invalid NIC number: " + nicNumber);
+		    throw new NICNotFoundException("Invalid NIC Number: " + nicNumber);
 		}
 
 		// adjust the day value based on the birth year and the type of NIC number

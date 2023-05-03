@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-} from '@coreui/react'
+import DataTable from 'react-data-table-component'
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 import { Link } from 'react-router-dom'
 
-const Update = () => {
-  const [users, setUsers] = useState(null)
-
-  //const {id} = useParams();
+const UsersTable = () => {
+  const [user, setUsers] = useState([])
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     loadUsers()
@@ -26,13 +14,87 @@ const Update = () => {
 
   const loadUsers = async () => {
     const result = await axios.get('http://localhost:8070/api/v1/getUser')
-    setUsers(result.data)
+    setUsers(result.data.data)
   }
 
   const deleteUser = async (id) => {
     await axios.delete(`http://localhost:8070/api/v1/deleteUser/${id}`)
     loadUsers()
   }
+
+  const filteredUsers = user.filter((user) =>
+    user.full_name.toLowerCase().includes(searchText.toLowerCase()),
+  )
+
+  const columns = [
+    {
+      name: 'Id',
+      selector: 'id',
+      sortable: true,
+    },
+    {
+      name: 'Name',
+      selector: 'full_name',
+      sortable: true,
+    },
+    {
+      name: 'Mobile',
+      selector: 'mobile',
+      sortable: true,
+    },
+    {
+      name: 'Nationality',
+      selector: 'nationality',
+      sortable: true,
+    },
+    {
+      name: 'Address',
+      selector: 'address',
+      sortable: true,
+    },
+    {
+      name: 'NIC',
+      selector: 'nic',
+      sortable: true,
+    },
+    {
+      name: 'Age',
+      selector: 'age',
+      sortable: true,
+    },
+    {
+      name: 'Birthday',
+      selector: 'birthday',
+      sortable: true,
+    },
+    {
+      name: 'Gender',
+      selector: 'gender',
+      sortable: true,
+    },
+    {
+      name: 'Actions',
+      cell: (row) => (
+        <>
+          <Link
+            to={`/users/updateData/UpdateField/${row.id}`}
+            className="mx-1 text-warning text-decoration-none fw-bold"
+          >
+            Edit
+          </Link>
+          <button
+            className="mx-1 text-danger bg-transparent border-0 text-decoration-underline fw-bold"
+            onClick={() => deleteUser(row.id)}
+          >
+            Delete
+          </button>
+        </>
+      ),
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
+  ]
 
   return (
     <CRow>
@@ -41,48 +103,25 @@ const Update = () => {
           <CCardHeader>
             <h2 className="fw-bold">Update Users</h2>
           </CCardHeader>
-          <CCardBody className="p-5 table-responsive">
-            <CTable hover className="table">
-              <CTableHead className="table-dark text-light shadow">
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Id</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Mobile</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Nationality</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Address</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">NIC</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Action</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {users &&
-                  users.data.map((user, index) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <CTableRow className="fw-bold">
-                      <CTableHeaderCell className="p-3" key={index}>
-                        {index + 1}
-                      </CTableHeaderCell>
-                      <CTableDataCell className="p-3">{user.full_name}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.mobile}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.nationality}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.address}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.nic}</CTableDataCell>
-                      <Link
-                        to={`/users/updateData/UpdateField/${user.id}`}
-                        className="btn btn-outline-warning fw-bold my-2 mx-2"
-                      >
-                        Edit
-                      </Link>
-                      <button
-                        className="btn btn-outline-danger fw-bold my-2 mx-2"
-                        onClick={() => deleteUser(user.id)}
-                      >
-                        Delete
-                      </button>
-                    </CTableRow>
-                  ))}
-              </CTableBody>
-            </CTable>
+          <CCardBody className="py-5 table-responsive">
+            <div className="mb-5">
+              <input
+                className=" float-end"
+                type="text"
+                placeholder="Search Name"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+            <DataTable
+              className="table"
+              columns={columns}
+              data={filteredUsers}
+              pagination={true}
+              highlightOnHover={true}
+              striped={true}
+              dense={true}
+            />
           </CCardBody>
         </CCard>
       </CCol>
@@ -90,4 +129,4 @@ const Update = () => {
   )
 }
 
-export default Update
+export default UsersTable

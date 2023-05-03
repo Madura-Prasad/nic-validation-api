@@ -25,9 +25,7 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible })
       }}
     >
-      <CSidebarBrand className="d-none d-md-flex cursor-pointer" to="/">
-        NIC
-      </CSidebarBrand>
+      <CSidebarBrand className="d-none d-md-flex cursor-pointer" to="/"></CSidebarBrand>
       <CSidebarNav>
         <SimpleBar>
           <AppSidebarNav items={navigation} />

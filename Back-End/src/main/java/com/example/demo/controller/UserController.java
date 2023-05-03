@@ -26,7 +26,7 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping("/getUser")
-	// Get User by ID
+	// Get User
 	public ResponseEntity<Object> getUser() {
 		return ResponseHandler.responseBuilder("Requested user details are here.", HttpStatus.OK, userService.getAll());
 	}

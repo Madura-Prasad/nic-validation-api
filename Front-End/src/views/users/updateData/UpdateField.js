@@ -100,7 +100,7 @@ export default function AddUser() {
               <label className="form-label fw-bold">Enter Your Name :</label>
               <input
                 type={'text'}
-                className="form-control fw-bold"
+                className="form-control fw-bold text-capitalize"
                 id="exampleFormControlInput1"
                 placeholder="Enter Here Name"
                 name="full_name"
@@ -128,7 +128,7 @@ export default function AddUser() {
               <label className="form-label fw-bold">Enter Your Nationality :</label>
               <input
                 type={'text'}
-                className="form-control fw-bold"
+                className="form-control fw-bold text-capitalize"
                 id="exampleFormControlInput1"
                 placeholder="Enter Here Nationality"
                 name="nationality"
@@ -144,7 +144,7 @@ export default function AddUser() {
               <label className="form-label fw-bold">Enter Your Address :</label>
               <input
                 type={'text'}
-                className="form-control fw-bold"
+                className="form-control fw-bold text-capitalize"
                 id="exampleFormControlInput1"
                 placeholder="Enter Here Address"
                 name="address"

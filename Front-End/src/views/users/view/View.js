@@ -1,23 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
-} from '@coreui/react'
+import DataTable from 'react-data-table-component'
+import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 
-const Tables = () => {
-  const [users, setUsers] = useState(null)
-
-  //const {id} = useParams();
+const UsersTable = () => {
+  const [user, setUser] = useState([])
+  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     loadUsers()
@@ -25,8 +13,63 @@ const Tables = () => {
 
   const loadUsers = async () => {
     const result = await axios.get('http://localhost:8070/api/v1/getUser')
-    setUsers(result.data)
+    const usersWithIds = result.data.data.map((user, index) => {
+      return { ...user, id: index + 1 }
+    })
+    setUser(usersWithIds)
   }
+
+  const filteredUsers = user.filter((user) =>
+    user.full_name.toLowerCase().includes(searchText.toLowerCase()),
+  )
+
+  const columns = [
+    {
+      name: 'Id',
+      selector: 'id',
+      sortable: true,
+    },
+    {
+      name: 'Name',
+      selector: 'full_name',
+      sortable: true,
+    },
+    {
+      name: 'Mobile',
+      selector: 'mobile',
+      sortable: true,
+    },
+    {
+      name: 'Nationality',
+      selector: 'nationality',
+      sortable: true,
+    },
+    {
+      name: 'Address',
+      selector: 'address',
+      sortable: true,
+    },
+    {
+      name: 'NIC',
+      selector: 'nic',
+      sortable: true,
+    },
+    {
+      name: 'Age',
+      selector: 'age',
+      sortable: true,
+    },
+    {
+      name: 'Birthday',
+      selector: 'birthday',
+      sortable: true,
+    },
+    {
+      name: 'Gender',
+      selector: 'gender',
+      sortable: true,
+    },
+  ]
 
   return (
     <CRow>
@@ -36,40 +79,24 @@ const Tables = () => {
             <h2 className="fw-bold">View Users</h2>
           </CCardHeader>
           <CCardBody className="py-5 table-responsive">
-            <CTable hover className="table">
-              <CTableHead className="table-dark text-light shadow">
-                <CTableRow>
-                  <CTableHeaderCell scope="col">Id</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Mobile</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Nationality</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Address</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">NIC</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Age</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Birthday</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Gender</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {users &&
-                  users.data.map((user, index) => (
-                    // eslint-disable-next-line react/jsx-key
-                    <CTableRow className="fw-bold">
-                      <CTableHeaderCell className="p-3" key={index}>
-                        {index + 1}
-                      </CTableHeaderCell>
-                      <CTableDataCell className="p-3">{user.full_name}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.mobile}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.nationality}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.address}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.nic}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.age}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.birthday}</CTableDataCell>
-                      <CTableDataCell className="p-3">{user.gender}</CTableDataCell>
-                    </CTableRow>
-                  ))}
-              </CTableBody>
-            </CTable>
+            <div className="mb-5">
+              <input
+                className=" float-end"
+                type="text"
+                placeholder="Search Name"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+              />
+            </div>
+            <DataTable
+              className="table"
+              columns={columns}
+              data={filteredUsers}
+              pagination={true}
+              highlightOnHover={true}
+              striped={true}
+              dense={true}
+            />
           </CCardBody>
         </CCard>
       </CCol>
@@ -77,4 +104,4 @@ const Tables = () => {
   )
 }
 
-export default Tables
+export default UsersTable

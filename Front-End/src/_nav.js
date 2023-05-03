@@ -1,12 +1,18 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import { cilPen, cilPlus, cilUser, cilViewQuilt } from '@coreui/icons'
+import { cilPen, cilPlus, cilSpeedometer, cilUser, cilViewQuilt } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
   {
     component: CNavTitle,
     name: '',
+  },
+  {
+    component: CNavItem,
+    name: 'Dashboard',
+    to: '/dashboard',
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
