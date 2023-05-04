@@ -13,24 +13,39 @@ import DataTable from 'react-data-table-component'
 const Charts = () => {
   const random = () => Math.round(Math.random() * 100)
 
-  const [user, setUser] = useState([])
-  const [searchText, setSearchText] = useState('')
+  const [users, setUsers] = useState([])
+  const [filteredUsers, setFilteredUsers] = useState([])
+  const [filterText, setFilterText] = useState('')
+  const [resetPaginationToggle, setResetPaginationToggle] = useState(false)
 
   useEffect(() => {
     loadUsers()
   }, [])
+
+  useEffect(() => {
+    setFilteredUsers(
+      users.filter(
+        (user) =>
+          (user.id && user.id.toString().includes(filterText.toLowerCase())) ||
+          (user.full_name && user.full_name.toLowerCase().includes(filterText.toLowerCase())) ||
+          (user.mobile && user.mobile.toLowerCase().includes(filterText.toLowerCase())) ||
+          (user.nationality && user.nationality.toLowerCase().includes(filterText.toLowerCase())) ||
+          (user.address && user.address.toLowerCase().includes(filterText.toLowerCase())) ||
+          (user.nic && user.nic.toLowerCase().includes(filterText.toLowerCase())) ||
+          (user.age && user.age.toString().includes(filterText.toLowerCase())) ||
+          (user.birthday && user.birthday.toLowerCase().includes(filterText.toLowerCase())) ||
+          (user.gender && user.gender.toLowerCase().includes(filterText.toLowerCase())),
+      ),
+    )
+  }, [filterText, users])
 
   const loadUsers = async () => {
     const result = await axios.get('http://localhost:8070/api/v1/getUser')
     const usersWithIds = result.data.data.map((user, index) => {
       return { ...user, id: index + 1 }
     })
-    setUser(usersWithIds)
+    setUsers(usersWithIds)
   }
-
-  const filteredUsers = user.filter((user) =>
-    user.full_name.toLowerCase().includes(searchText.toLowerCase()),
-  )
 
   const columns = [
     {
@@ -79,6 +94,13 @@ const Charts = () => {
       sortable: true,
     },
   ]
+
+  const handleClear = () => {
+    if (filterText) {
+      setResetPaginationToggle(!resetPaginationToggle)
+      setFilterText('')
+    }
+  }
 
   return (
     <CRow>
@@ -167,7 +189,7 @@ const Charts = () => {
           <CCardBody>
             <CChartPolarArea
               data={{
-                labels: ['1940-1960', '1960-1980', '1980-2000', '2000-2020'],
+                labels: ['1960-1980', '1970-1980', '1980-1990', '1990-2000'],
                 datasets: [
                   {
                     data: [60, 45, 30, 15],
@@ -179,29 +201,41 @@ const Charts = () => {
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol xs={12} className="mt-5">
-        <CCard className="mb-4 container">
+      <CCol xl={12}>
+        <CCard>
           <CCardHeader>
-            <h2 className="fw-bold">Users Details</h2>
+            <h4 className="card-title mb-0">Users Details</h4>
           </CCardHeader>
-          <CCardBody className="py-5 table-responsive">
-            <div className="mb-5">
-              <input
-                className=" float-end"
-                type="text"
-                placeholder="Search Name"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
+          <CCardBody>
             <DataTable
-              className="table"
               columns={columns}
               data={filteredUsers}
-              pagination={true}
               highlightOnHover={true}
               striped={true}
               dense={true}
+              pagination
+              paginationResetDefaultPage={resetPaginationToggle}
+              subHeader
+              subHeaderComponent={
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <input
+                    type="text"
+                    placeholder="Search Here"
+                    className="form-control"
+                    value={filterText}
+                    onChange={(e) => setFilterText(e.target.value)}
+                  />
+                  {filterText && (
+                    <button
+                      className="btn btn-outline-danger fw-bold my-2 mx-2"
+                      onClick={handleClear}
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
+              }
+              noDataComponent={<div className="text-center">No users found</div>}
             />
           </CCardBody>
         </CCard>

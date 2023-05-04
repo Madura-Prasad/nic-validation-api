@@ -5,7 +5,6 @@ import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 
 const UsersTable = () => {
   const [user, setUser] = useState([])
-  const [searchText, setSearchText] = useState('')
 
   useEffect(() => {
     loadUsers()
@@ -18,10 +17,6 @@ const UsersTable = () => {
     })
     setUser(usersWithIds)
   }
-
-  const filteredUsers = user.filter((user) =>
-    user.full_name.toLowerCase().includes(searchText.toLowerCase()),
-  )
 
   const columns = [
     {
@@ -79,19 +74,10 @@ const UsersTable = () => {
             <h2 className="fw-bold">View Users</h2>
           </CCardHeader>
           <CCardBody className="py-5 table-responsive">
-            <div className="mb-5">
-              <input
-                className=" float-end"
-                type="text"
-                placeholder="Search Name"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-              />
-            </div>
             <DataTable
               className="table"
               columns={columns}
-              data={filteredUsers}
+              data={user}
               pagination={true}
               highlightOnHover={true}
               striped={true}
