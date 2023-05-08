@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.User;
+import com.example.demo.repository.UserRepo;
 import com.example.demo.response.ResponseHandler;
 import com.example.demo.service.UserService;
 
@@ -24,6 +27,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserRepo userRepo;
+
 
 	@GetMapping("/getUser")
 	// Get User
@@ -61,5 +67,34 @@ public class UserController {
 		userService.deleteUser(id);
 		return "User Deleted Successfully!!!";
 	}
+	
+	
+	@GetMapping("/nicCount")
+	public ResponseEntity<Object> getNic(User user) {
+		return ResponseHandler.responseBuilder("NIC Range Here!!!", HttpStatus.OK, userRepo.getCountNIC());
+	}
+	
+	
+	@GetMapping("/mobileCount")
+	public ResponseEntity<Object> getMobile(User user) {
+		return ResponseHandler.responseBuilder("Mobile Number Range Here!!!", HttpStatus.OK, userRepo.getCountMobile());
+	}
+	
+	@GetMapping("/genderCount")
+	public ResponseEntity<Object> getGender(User user) {
+		return ResponseHandler.responseBuilder("Gender Range Here!!!", HttpStatus.OK, userRepo.getCountGender());
+	}
+	
+	@GetMapping("/ageCount")
+	public ResponseEntity<Object> getAge(User user) {
+		return ResponseHandler.responseBuilder("Age Range Here!!!", HttpStatus.OK, userRepo.getCountAge());
+	}
+	
+	@GetMapping("/birthYearCount")
+	public ResponseEntity<Object> getBirthYear(User user) {
+		return ResponseHandler.responseBuilder("Birth Year Range Here!!!", HttpStatus.OK, userRepo.getCountBirthYear());
+	}
+	
+	
 
 }

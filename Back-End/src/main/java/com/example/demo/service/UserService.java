@@ -95,5 +95,6 @@ public class UserService {
 			throw new UserNotFoundException("Requested User Not Found");
 		userRepo.deleteById(id);
 	}
+		
 
 }
