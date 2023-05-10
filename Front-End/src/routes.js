@@ -7,7 +7,6 @@ const View = React.lazy(() => import('./views/users/view/View'))
 const UpdateField = React.lazy(() => import('./views/users/updateData/UpdateField'))
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/users', name: ' Manage Users', element: View, exact: true },
   { path: '/users/add', name: 'Add Users', element: Add },

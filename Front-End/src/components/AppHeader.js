@@ -13,7 +13,6 @@ import CIcon from '@coreui/icons-react'
 import { cilMenu } from '@coreui/icons'
 
 import { AppBreadcrumb } from './index'
-import { logo } from 'src/assets/brand/logo'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -30,7 +29,7 @@ const AppHeader = () => {
         </CHeaderToggler>
         <CHeaderNav className="fw-bold fs-4">NIC Validation System</CHeaderNav>
         <CHeaderBrand className="mx-auto d-md-none" to="/">
-          <CIcon icon={logo} height={48} alt="Logo" />
+          {/* <CIcon icon={logo} height={48} alt="Logo" /> */}
         </CHeaderBrand>
         <CHeaderNav className="d-none d-md-flex me-auto"></CHeaderNav>
         <CHeaderNav></CHeaderNav>

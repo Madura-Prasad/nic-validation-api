@@ -1,4 +1,5 @@
-import { CCard, CCardBody, CCol, CCardHeader, CRow } from '@coreui/react'
+import React, { useState, useEffect } from 'react'
+import DataTable from 'react-data-table-component'
 import {
   CChartBar,
   CChartDoughnut,
@@ -6,242 +7,298 @@ import {
   CChartPie,
   CChartPolarArea,
 } from '@coreui/react-chartjs'
-import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import DataTable from 'react-data-table-component'
+import { CCard, CCardBody, CCol, CCardHeader, CRow } from '@coreui/react'
 
-const Charts = () => {
-  const random = () => Math.round(Math.random() * 100)
+const Dashboard = () => {
+  const [data, setData] = useState([])
+  const [filteredData, setFilteredData] = useState([])
+  const [chartData, setChartData] = useState([])
+  const [chartLabels, setChartLabels] = useState([])
+  const [resetPaginationToggle] = useState(false)
 
-  const [users, setUsers] = useState([])
-  const [filteredUsers, setFilteredUsers] = useState([])
-  const [filterText, setFilterText] = useState('')
-  const [resetPaginationToggle, setResetPaginationToggle] = useState(false)
-
-  useEffect(() => {
-    loadUsers()
-  }, [])
-
-  useEffect(() => {
-    setFilteredUsers(
-      users.filter(
-        (user) =>
-          (user.id && user.id.toString().includes(filterText.toLowerCase())) ||
-          (user.full_name && user.full_name.toLowerCase().includes(filterText.toLowerCase())) ||
-          (user.mobile && user.mobile.toLowerCase().includes(filterText.toLowerCase())) ||
-          (user.nationality && user.nationality.toLowerCase().includes(filterText.toLowerCase())) ||
-          (user.address && user.address.toLowerCase().includes(filterText.toLowerCase())) ||
-          (user.nic && user.nic.toLowerCase().includes(filterText.toLowerCase())) ||
-          (user.age && user.age.toString().includes(filterText.toLowerCase())) ||
-          (user.birthday && user.birthday.toLowerCase().includes(filterText.toLowerCase())) ||
-          (user.gender && user.gender.toLowerCase().includes(filterText.toLowerCase())),
-      ),
-    )
-  }, [filterText, users])
-
-  const loadUsers = async () => {
-    const result = await axios.get('http://localhost:8070/api/v1/getUser')
-    const usersWithIds = result.data.data.map((user, index) => {
-      return { ...user, id: index + 1 }
-    })
-    setUsers(usersWithIds)
+  const fetchData = async () => {
+    const response = await axios.get('http://localhost:8070/api/v1/filter')
+    setData(response.data)
+    setFilteredData(response.data)
   }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   const columns = [
     {
-      name: 'Id',
-      selector: 'id',
-      sortable: true,
-    },
-    {
-      name: 'Name',
+      name: 'Full Name',
       selector: 'full_name',
       sortable: true,
-    },
-    {
-      name: 'Mobile',
-      selector: 'mobile',
-      sortable: true,
-    },
-    {
-      name: 'Nationality',
-      selector: 'nationality',
-      sortable: true,
-    },
-    {
-      name: 'Address',
-      selector: 'address',
-      sortable: true,
-    },
-    {
-      name: 'NIC',
-      selector: 'nic',
-      sortable: true,
+      width: '200px',
     },
     {
       name: 'Age',
       selector: 'age',
       sortable: true,
+      width: '150px',
     },
     {
       name: 'Birthday',
       selector: 'birthday',
       sortable: true,
+      width: '150px',
     },
     {
       name: 'Gender',
       selector: 'gender',
       sortable: true,
+      width: '150px',
+    },
+    {
+      name: 'Mobile Number',
+      selector: 'mobile',
+      sortable: true,
+      width: '150px',
+    },
+    {
+      name: 'Address',
+      selector: 'address',
+      sortable: true,
+      width: '150px',
+    },
+    {
+      name: 'Nationality',
+      selector: 'nationality',
+      sortable: true,
+      width: '150px',
+    },
+    {
+      name: 'NIC',
+      selector: 'nic',
+      sortable: true,
+      width: '150px',
     },
   ]
 
-  const handleClear = () => {
-    if (filterText) {
-      setResetPaginationToggle(!resetPaginationToggle)
-      setFilterText('')
-    }
+  const handleAgeFilter = (e) => {
+    const searchTerm = e.target.value.toLowerCase()
+    const filtered = data.filter((item) => item.age && item.age.toString().includes(searchTerm))
+    setFilteredData(filtered)
   }
+
+  const handleGenderFilter = (e) => {
+    const searchTerm = e.target.value.toLowerCase()
+    const filtered = data.filter(
+      (item) => item.gender && item.gender.toString().toLowerCase().includes(searchTerm),
+    )
+    setFilteredData(filtered)
+  }
+
+  const handleNameFilter = (e) => {
+    const searchTerm = e.target.value.toLowerCase()
+    const filtered = data.filter(
+      (item) => item.full_name && item.full_name.toLowerCase().includes(searchTerm),
+    )
+    setFilteredData(filtered)
+  }
+
+  const handleMobileFilter = (e) => {
+    const searchTerm = e.target.value.toLowerCase()
+    const filtered = data.filter(
+      (item) => item.mobile && item.mobile.toLowerCase().includes(searchTerm),
+    )
+    setFilteredData(filtered)
+  }
+
+  const handleAddressFilter = (e) => {
+    const searchTerm = e.target.value.toLowerCase()
+    const filtered = data.filter(
+      (item) => item.address && item.address.toLowerCase().includes(searchTerm),
+    )
+    setFilteredData(filtered)
+  }
+
+  const handleNationalityFilter = (e) => {
+    const searchTerm = e.target.value.toLowerCase()
+    const filtered = data.filter(
+      (item) => item.nationality && item.nationality.toLowerCase().includes(searchTerm),
+    )
+    setFilteredData(filtered)
+  }
+
+  const chart = {
+    labels: chartLabels,
+    datasets: [
+      {
+        label: 'Age',
+        backgroundColor: '#2C3333',
+        borderColor: '#2C3333',
+        borderWidth: 1,
+        hoverBackgroundColor: '#2C3333',
+        hoverBorderColor: '#2C3333',
+        data: chartData,
+      },
+    ],
+  }
+
+  useEffect(() => {
+    const ages = filteredData.map((item) => item.age)
+    const bins = [0, 20, 30, 40, 50, 60]
+    const labels = bins.map((bin, i) => {
+      const label = i === bins.length - 1 ? `${bins[i - 1]}+` : `${bin}-${bins[i + 1] - 1}`
+      return label
+    })
+    const data = labels.map((label, i) => {
+      const lowerBound = bins[i]
+      const upperBound = i === bins.length - 1 ? Infinity : bins[i + 1] - 1
+      const count = ages.filter((age) => age >= lowerBound && age <= upperBound).length
+      return count
+    })
+    setChartLabels(labels)
+    setChartData(data)
+  }, [filteredData])
 
   return (
     <CRow>
-      <CCol xs={6}>
-        <CCard className="mb-4">
-          <CCardHeader>Mobile Number Provider Chart</CCardHeader>
-          <CCardBody>
-            <CChartBar
-              data={{
-                labels: ['Hutch', 'Airtel', 'Dialog', 'Mobitel'],
-                datasets: [
-                  {
-                    label: 'Mobile Numbers',
-                    backgroundColor: '#f87979',
-                    data: [40, 20, 12, 30],
-                  },
-                ],
-              }}
-              labels="months"
-            />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={6}>
-        <CCard className="mb-4">
-          <CCardHeader>Age Chart</CCardHeader>
-          <CCardBody>
-            <CChartLine
-              data={{
-                labels: ['0-20', '40-60', '60-80'],
-                datasets: [
-                  {
-                    label: 'Age',
-                    backgroundColor: '#DD1B16',
-                    borderColor: '#DD1B16',
-                    pointBackgroundColor: '#00000',
-                    pointBorderColor: '#fff',
-                    data: [random(), random(), random()],
-                  },
-                ],
-              }}
-            />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={6}>
-        <CCard className="mb-4">
-          <CCardHeader>Gender Chart</CCardHeader>
-          <CCardBody>
-            <CChartDoughnut
-              data={{
-                labels: ['Male', 'Female'],
-                datasets: [
-                  {
-                    backgroundColor: ['#41B883', '#E46651'],
-                    data: [40, 20],
-                  },
-                ],
-              }}
-            />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={6}>
-        <CCard className="mb-4">
-          <CCardHeader>NIC New or Old Chart</CCardHeader>
-          <CCardBody>
-            <CChartPie
-              data={{
-                labels: ['New NIC', 'Old NIC'],
-                datasets: [
-                  {
-                    data: [300, 50],
-                    backgroundColor: ['#FF6384', '#36A2EB'],
-                    hoverBackgroundColor: ['#FF6384', '#36A2EB'],
-                  },
-                ],
-              }}
-            />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xs={6}>
-        <CCard className="mb-4">
-          <CCardHeader>Birth Year Chart</CCardHeader>
-          <CCardBody>
-            <CChartPolarArea
-              data={{
-                labels: ['1960-1980', '1970-1980', '1980-1990', '1990-2000'],
-                datasets: [
-                  {
-                    data: [60, 45, 30, 15],
-                    backgroundColor: ['#FF6384', '#4BC0C0', '#FFCE56', '#E7E9ED'],
-                  },
-                ],
-              }}
-            />
-          </CCardBody>
-        </CCard>
-      </CCol>
-      <CCol xl={12}>
-        <CCard>
-          <CCardHeader>
-            <h4 className="card-title mb-0">Users Details</h4>
-          </CCardHeader>
-          <CCardBody>
-            <DataTable
-              columns={columns}
-              data={filteredUsers}
-              highlightOnHover={true}
-              striped={true}
-              dense={true}
-              pagination
-              paginationResetDefaultPage={resetPaginationToggle}
-              subHeader
-              subHeaderComponent={
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <input
-                    type="text"
-                    placeholder="Search Here"
-                    className="form-control"
-                    value={filterText}
-                    onChange={(e) => setFilterText(e.target.value)}
-                  />
-                  {filterText && (
-                    <button
-                      className="btn btn-outline-danger fw-bold my-2 mx-2"
-                      onClick={handleClear}
-                    >
-                      Clear
-                    </button>
-                  )}
-                </div>
-              }
-              noDataComponent={<div className="text-center">No users found</div>}
-            />
-          </CCardBody>
-        </CCard>
+      <CCol>
+        <CCol>
+          <CCard>
+            <CCardHeader>
+              <input
+                type="text"
+                placeholder="Search by Name"
+                onChange={handleNameFilter}
+                style={{
+                  marginRight: '20px',
+                  borderColor: 'black',
+                  borderRadius: '7.5px',
+                  textAlign: 'center',
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search by Age"
+                onChange={handleAgeFilter}
+                style={{
+                  marginRight: '20px',
+                  borderColor: 'black',
+                  borderRadius: '7.5px',
+                  textAlign: 'center',
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search by Gender"
+                onChange={handleGenderFilter}
+                style={{
+                  marginRight: '20px',
+                  borderColor: 'black',
+                  borderRadius: '7.5px',
+                  textAlign: 'center',
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search by Mobile"
+                onChange={handleMobileFilter}
+                style={{
+                  marginRight: '20px',
+                  borderColor: 'black',
+                  borderRadius: '7.5px',
+                  textAlign: 'center',
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search by Address"
+                onChange={handleAddressFilter}
+                style={{
+                  marginRight: '20px',
+                  borderColor: 'black',
+                  borderRadius: '7.5px',
+                  textAlign: 'center',
+                }}
+              />
+              <input
+                type="text"
+                placeholder="Search by Nationality"
+                onChange={handleNationalityFilter}
+                style={{
+                  marginRight: '20px',
+                  borderColor: 'black',
+                  borderRadius: '7.5px',
+                  textAlign: 'center',
+                }}
+              />
+            </CCardHeader>
+          </CCard>
+        </CCol>
+
+        <CRow>
+          <CCol xs={6}>
+            <CCard className="mb-4 mt-4">
+              <CCardHeader>Age Range</CCardHeader>
+              <CCardBody>
+                <CChartBar data={chart} />
+              </CCardBody>
+            </CCard>
+          </CCol>
+
+          <CCol xs={6}>
+            <CCard className="mb-4 mt-4">
+              <CCardHeader>Age Range</CCardHeader>
+              <CCardBody>
+                <CChartLine data={chart} />
+              </CCardBody>
+            </CCard>
+          </CCol>
+
+          <CCol xs={6}>
+            <CCard className="mb-4 mt-4">
+              <CCardHeader>Age Range</CCardHeader>
+              <CCardBody>
+                <CChartDoughnut data={chart} />
+              </CCardBody>
+            </CCard>
+          </CCol>
+
+          <CCol xs={6}>
+            <CCard className="mb-4 mt-4">
+              <CCardHeader>Age Range</CCardHeader>
+              <CCardBody>
+                <CChartPie data={chart} />
+              </CCardBody>
+            </CCard>
+          </CCol>
+
+          <CCol xs={6}>
+            <CCard className="mb-4 mt-4">
+              <CCardHeader>Age Range</CCardHeader>
+              <CCardBody>
+                <CChartPolarArea data={chart} />
+              </CCardBody>
+            </CCard>
+          </CCol>
+
+          <CCol xs={12}>
+            <CCard className="mb-4">
+              <CCardHeader>User Details</CCardHeader>
+
+              <CCardBody>
+                <DataTable
+                  columns={columns}
+                  data={filteredData}
+                  highlightOnHover={true}
+                  striped={true}
+                  dense={true}
+                  pagination
+                  paginationResetDefaultPage={resetPaginationToggle}
+                />
+              </CCardBody>
+            </CCard>
+          </CCol>
+        </CRow>
       </CCol>
     </CRow>
   )
 }
 
-export default Charts
+export default Dashboard

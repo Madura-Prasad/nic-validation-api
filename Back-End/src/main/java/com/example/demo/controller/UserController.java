@@ -2,6 +2,9 @@ package com.example.demo.controller;
 
 
 
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.User;
@@ -69,32 +73,59 @@ public class UserController {
 	}
 	
 	
-	@GetMapping("/nicCount")
-	public ResponseEntity<Object> getNic(User user) {
-		return ResponseHandler.responseBuilder("NIC Range Here!!!", HttpStatus.OK, userRepo.getCountNIC());
-	}
+//	@GetMapping("/nicCount")
+//	public ResponseEntity<Object> getNic(User user) {
+//		return ResponseHandler.responseBuilder("NIC Range Here!!!", HttpStatus.OK, userRepo.getCountNIC());
+//	}
+//	
+//	
+//	@GetMapping("/mobileCount")
+//	public ResponseEntity<Object> getMobile(User user) {
+//		return ResponseHandler.responseBuilder("Mobile Number Range Here!!!", HttpStatus.OK, userRepo.getCountMobile());
+//	}
+//	
+//	@GetMapping("/genderCount")
+//	public ResponseEntity<Object> getGender(User user) {
+//		return ResponseHandler.responseBuilder("Gender Range Here!!!", HttpStatus.OK, userRepo.getCountGender());
+//	}
+//	
+//	@GetMapping("/ageCount")
+//	public ResponseEntity<Object> getAge(User user) {
+//		return ResponseHandler.responseBuilder("Age Range Here!!!", HttpStatus.OK, userRepo.getCountAge());
+//	}
+//	
+//	@GetMapping("/birthYearCount")
+//	public ResponseEntity<Object> getBirthYear(User user) {
+//		return ResponseHandler.responseBuilder("Birth Year Range Here!!!", HttpStatus.OK, userRepo.getCountBirthYear());
+//	}
 	
 	
-	@GetMapping("/mobileCount")
-	public ResponseEntity<Object> getMobile(User user) {
-		return ResponseHandler.responseBuilder("Mobile Number Range Here!!!", HttpStatus.OK, userRepo.getCountMobile());
-	}
-	
-	@GetMapping("/genderCount")
-	public ResponseEntity<Object> getGender(User user) {
-		return ResponseHandler.responseBuilder("Gender Range Here!!!", HttpStatus.OK, userRepo.getCountGender());
-	}
-	
-	@GetMapping("/ageCount")
-	public ResponseEntity<Object> getAge(User user) {
-		return ResponseHandler.responseBuilder("Age Range Here!!!", HttpStatus.OK, userRepo.getCountAge());
-	}
-	
-	@GetMapping("/birthYearCount")
-	public ResponseEntity<Object> getBirthYear(User user) {
-		return ResponseHandler.responseBuilder("Birth Year Range Here!!!", HttpStatus.OK, userRepo.getCountBirthYear());
-	}
 	
 	
+	 @GetMapping("/filter")
+	    public ResponseEntity<List<User>> searchUsers(
+	            @RequestParam(name = "full_name", required = false) String full_name,
+	            @RequestParam(name = "address", required = false) String address,
+	            @RequestParam(name = "mobile", required = false) String mobile,
+	            @RequestParam(name = "nic", required = false) String nic,
+	            @RequestParam(name = "nationality", required = false) String nationality,
+	            @RequestParam(name = "birthday", required = false) String birthday,
+	            @RequestParam(name = "age", required = false) String age,
+	            @RequestParam(name = "gender", required = false) Integer gender){
 
+	        List<User> filteredUsers = userRepo.searchUsers(birthday, address, mobile, nic, nationality, gender, age, gender);
+
+	        if (filteredUsers.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	        } else {
+	            return new ResponseEntity<>(filteredUsers, HttpStatus.OK);
+	        }
+	    }
+	
+	
+	
+	
+	
+	
+	
 }
