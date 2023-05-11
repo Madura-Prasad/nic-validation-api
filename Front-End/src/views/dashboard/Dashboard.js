@@ -204,22 +204,47 @@ const Dashboard = () => {
     setLineChartData(data)
   }, [filteredData])
 
-  //Pie Chart for Mobile Number
+  //Pie Chart for Gender
   const pieChart = {
-    labels: polarChartLabels,
+    labels: pieChartLabels,
+    datasets: [
+      {
+        label: 'Nationality Count',
+        backgroundColor: ['#245953', '#408E91', '#E49393', '#19A7CE'],
+        data: pieChartData,
+      },
+    ],
+  }
+
+  useEffect(() => {
+    const nationalities = filteredData.map((item) => item.nationality)
+    const bins = ['Sinhalese', 'Burger', 'Tamil', 'Muslim']
+    const labels = bins.map((bin) => bin)
+
+    const data = labels.map((label, i) => {
+      const count = nationalities.filter((nat) => nat === bins[i]).length
+      return count
+    })
+
+    setPieChartLabels(labels)
+    setPieChartData(data)
+  }, [filteredData])
+
+  //Doughnut Chart for Mobile Number
+  const doughnutChart = {
+    labels: doughnutChartLabels,
     datasets: [
       {
         label: 'Mobile Numbers Count',
         borderWidth: 1,
-        backgroundColor: ['#1A2F4B', '#28475C', '#2F8886', '#84C69B', '#E23E57'],
-        data: polarChartData,
+        backgroundColor: ['#21325E', '#28475C', '#C69749', '#84C69B', '#E23E57'],
+        data: doughnutChartData,
       },
     ],
   }
 
   useEffect(() => {
     if (!filteredData || filteredData.length === 0) {
-      // If filteredData is empty or undefined, reset the chart data and labels
       setPolarChartLabels([])
       setPolarChartData([])
       return
@@ -239,48 +264,19 @@ const Dashboard = () => {
       return count
     })
 
-    setPolarChartLabels(labels)
-    setPolarChartData(data)
-  }, [filteredData])
-
-  //Doughnut Chart for Gender
-  const doughnutChart = {
-    labels: doughnutChartLabels,
-    datasets: [
-      {
-        label: 'Gender Count',
-        backgroundColor: ['#41B883', '#E46651'],
-        data: doughnutChartData,
-      },
-    ],
-  }
-
-  useEffect(() => {
-    const genders = filteredData.map((item) => item.gender)
-    const bins = ['Male', 'Female']
-    const labels = bins.map((bin) => bin)
-
-    const data = labels.map((label, i) => {
-      const lowerBound = i === 0 ? 0 : bins[i - 1] + 1
-      const upperBound = bins[i]
-
-      const count = genders.filter((gender) => gender >= lowerBound && gender <= upperBound).length
-      return count
-    })
-
     setDoughnutChartLabels(labels)
     setDoughnutChartData(data)
   }, [filteredData])
 
   //Polar Chart for NIC
   const polarChart = {
-    labels: pieChartLabels,
+    labels: polarChartLabels,
     datasets: [
       {
         label: 'NIC New or Old Count',
         borderWidth: 1,
         backgroundColor: ['#26282B', '#5F85DB'],
-        data: pieChartData,
+        data: polarChartData,
       },
     ],
   }
@@ -294,8 +290,8 @@ const Dashboard = () => {
     })
     const labels = ['Old NIC', 'New NIC']
     const data = [oldNIC.length, newNIC.length]
-    setPieChartLabels(labels)
-    setPieChartData(data)
+    setPolarChartLabels(labels)
+    setPolarChartData(data)
   }, [filteredData])
 
   return (
@@ -345,7 +341,7 @@ const Dashboard = () => {
                     className="form-control"
                   />
                 </div>
-                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                   <input
                     type="text"
                     placeholder="Search by Nationality"
@@ -379,7 +375,7 @@ const Dashboard = () => {
 
           <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Gender Doughnut Chart</CCardHeader>
+              <CCardHeader> Mobile Number Provider Doughnut Chart</CCardHeader>
               <CCardBody>
                 <CChartDoughnut data={doughnutChart} />
               </CCardBody>
@@ -388,7 +384,7 @@ const Dashboard = () => {
 
           <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader> Mobile Number Provider Pie Chart</CCardHeader>
+              <CCardHeader> Nationality Pie Chart</CCardHeader>
               <CCardBody>
                 <CChartPie data={pieChart} />
               </CCardBody>
@@ -397,7 +393,7 @@ const Dashboard = () => {
 
           <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>NIC New or Old Polar Chart</CCardHeader>
+              <CCardHeader>NIC Polar Chart ( New or Old )</CCardHeader>
               <CCardBody>
                 <CChartPolarArea data={polarChart} />
               </CCardBody>
@@ -406,7 +402,7 @@ const Dashboard = () => {
 
           <CCol xs={12}>
             <CCard className="mb-4">
-              <CCardHeader>User Details</CCardHeader>
+              <CCardHeader className="fw-bold">User Details</CCardHeader>
 
               <CCardBody>
                 <DataTable
