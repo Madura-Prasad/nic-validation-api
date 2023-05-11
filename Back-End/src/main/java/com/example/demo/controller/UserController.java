@@ -110,10 +110,10 @@ public class UserController {
 	            @RequestParam(name = "nic", required = false) String nic,
 	            @RequestParam(name = "nationality", required = false) String nationality,
 	            @RequestParam(name = "birthday", required = false) String birthday,
-	            @RequestParam(name = "age", required = false) String age,
-	            @RequestParam(name = "gender", required = false) Integer gender){
+	            @RequestParam(name = "age", required = false) Integer age,
+	            @RequestParam(name = "gender", required = false) String gender){
 
-	        List<User> filteredUsers = userRepo.searchUsers(birthday, address, mobile, nic, nationality, gender, age, gender);
+	        List<User> filteredUsers = userRepo.searchUsers(birthday, address, mobile, nic, nationality, age, gender, age);
 
 	        if (filteredUsers.isEmpty()) {
 	            return new ResponseEntity<>(HttpStatus.NOT_FOUND);

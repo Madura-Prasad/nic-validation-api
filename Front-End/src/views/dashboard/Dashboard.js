@@ -13,8 +13,18 @@ import { CCard, CCardBody, CCol, CCardHeader, CRow } from '@coreui/react'
 const Dashboard = () => {
   const [data, setData] = useState([])
   const [filteredData, setFilteredData] = useState([])
-  const [chartData, setChartData] = useState([])
-  const [chartLabels, setChartLabels] = useState([])
+  const [barChartData, setBarChartData] = useState([])
+  const [barChartLabels, setBarChartLabels] = useState([])
+  const [lineChartData, setLineChartData] = useState([])
+  const [lineChartLabels, setLineChartLabels] = useState([])
+  const [doughnutChartData, setDoughnutChartData] = useState([])
+  const [doughnutChartLabels, setDoughnutChartLabels] = useState([])
+  const [polarChartData, setPolarChartData] = useState([])
+  const [polarChartLabels, setPolarChartLabels] = useState([])
+
+  const [pieChartData, setPieChartData] = useState([])
+  const [pieChartLabels, setPieChartLabels] = useState([])
+
   const [resetPaginationToggle] = useState(false)
 
   const fetchData = async () => {
@@ -124,17 +134,18 @@ const Dashboard = () => {
     setFilteredData(filtered)
   }
 
-  const chart = {
-    labels: chartLabels,
+  //Bar Chart for Ages
+  const barChart = {
+    labels: barChartLabels,
     datasets: [
       {
-        label: 'Age',
-        backgroundColor: '#2C3333',
-        borderColor: '#2C3333',
-        borderWidth: 1,
-        hoverBackgroundColor: '#2C3333',
-        hoverBorderColor: '#2C3333',
-        data: chartData,
+        label: 'Ages Count',
+        backgroundColor: '#1B2430',
+        borderColor: '#EEEEEE',
+        borderWidth: 2,
+        hoverBackgroundColor: '#51557E',
+        hoverBorderColor: '#EEEEEE',
+        data: barChartData,
       },
     ],
   }
@@ -146,14 +157,137 @@ const Dashboard = () => {
       const label = i === bins.length - 1 ? `${bins[i - 1]}+` : `${bin}-${bins[i + 1] - 1}`
       return label
     })
+
     const data = labels.map((label, i) => {
       const lowerBound = bins[i]
       const upperBound = i === bins.length - 1 ? Infinity : bins[i + 1] - 1
       const count = ages.filter((age) => age >= lowerBound && age <= upperBound).length
       return count
     })
-    setChartLabels(labels)
-    setChartData(data)
+    setBarChartLabels(labels)
+    setBarChartData(data)
+  }, [filteredData])
+
+  //Line Chart for Birth Year
+  const lineChart = {
+    labels: lineChartLabels,
+    datasets: [
+      {
+        label: 'Birth Year Count',
+        backgroundColor: '#1B2430',
+        borderColor: '#EEEEEE',
+        borderWidth: 2,
+        hoverBackgroundColor: '#51557E',
+        hoverBorderColor: '#EEEEEE',
+        data: lineChartData,
+      },
+    ],
+  }
+
+  useEffect(() => {
+    const birthday = filteredData.map((item) => item.birthday)
+    const bins = ['1960-1970', '1970-1980', '1980-1990', '1990-2000']
+    const labels = bins.map((bin) => bin)
+
+    const data = labels.map((label, i) => {
+      const lowerBound = i === 0 ? 1960 : 1970
+      const upperBound = i === bins.length - 1 ? Infinity : 1980
+      const count = birthday.filter((birthday) => {
+        return birthday >= lowerBound && birthday < upperBound
+      }).length
+      return count
+    })
+
+    setLineChartLabels(labels)
+    setLineChartData(data)
+  }, [filteredData])
+
+  //Pie Chart for NIC
+  const pieChart = {
+    labels: pieChartLabels,
+    datasets: [
+      {
+        label: 'Birth Year Count',
+        backgroundColor: ['#41B883', '#E46651'],
+        data: pieChartData,
+      },
+    ],
+  }
+
+  useEffect(() => {
+    const birthday = filteredData.map((item) => item.nic)
+    const bins = ['Old', 'New']
+    const labels = bins.map((bin) => bin)
+
+    const data = labels.map((label, i) => {
+      const lowerBound = i === 0 ? 1960 : 1970
+      const upperBound = i === bins.length - 1 ? Infinity : 1980
+      const count = birthday.filter((birthday) => {
+        return birthday >= lowerBound && birthday < upperBound
+      }).length
+      return count
+    })
+
+    setPieChartLabels(labels)
+    setPieChartData(data)
+  }, [filteredData])
+
+  //Doughnut Chart for NIC
+  const doughnutChart = {
+    labels: doughnutChartLabels,
+    datasets: [
+      {
+        label: 'Gender Count',
+        backgroundColor: ['#41B883', '#E46651'],
+        data: doughnutChartData,
+      },
+    ],
+  }
+
+  useEffect(() => {
+    const gender = filteredData.map((item) => item.gender)
+    const bins = ['Male', 'Female']
+    const labels = bins.map((bin) => bin)
+
+    const data = labels.map((label, i) => {
+      const lowerBound = bins[i]
+      const upperBound = i === bins.length - 1 ? Infinity : bins[i + 1] - 1
+      const count = gender.filter((gender) => gender >= lowerBound && gender <= upperBound).length
+      return count
+    })
+    setDoughnutChartLabels(labels)
+    setDoughnutChartData(data)
+  }, [filteredData])
+
+  //Polar Chart for NIC
+  const polarChart = {
+    labels: polarChartLabels,
+    datasets: [
+      {
+        label: 'Gender Count',
+        backgroundColor: '#1B2430',
+        borderColor: '#EEEEEE',
+        borderWidth: 2,
+        hoverBackgroundColor: '#51557E',
+        hoverBorderColor: '#EEEEEE',
+        data: polarChartData,
+      },
+    ],
+  }
+
+  useEffect(() => {
+    const gender = filteredData.map((item) => item.mobile)
+    const bins = ['078', '077']
+    const labels = bins.map((bin) => bin)
+
+    const data = labels.map((label, i) => {
+      const lowerBound = bins[i]
+      const upperBound = i === bins.length - 1 ? Infinity : bins[i + 1] - 1
+      const count = gender.filter((gender) => gender >= lowerBound && gender <= upperBound).length
+      return count
+    })
+    setPolarChartLabels(labels)
+    setPolarChartData(data)
   }, [filteredData])
 
   return (
@@ -235,45 +369,45 @@ const Dashboard = () => {
         <CRow>
           <CCol xs={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Age Range</CCardHeader>
+              <CCardHeader>Age Bar Chart</CCardHeader>
               <CCardBody>
-                <CChartBar data={chart} />
+                <CChartBar data={barChart} />
               </CCardBody>
             </CCard>
           </CCol>
 
           <CCol xs={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Age Range</CCardHeader>
+              <CCardHeader>Birth Line Chart</CCardHeader>
               <CCardBody>
-                <CChartLine data={chart} />
+                <CChartLine data={lineChart} />
               </CCardBody>
             </CCard>
           </CCol>
 
           <CCol xs={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Age Range</CCardHeader>
+              <CCardHeader>Gender Doughnut Chart</CCardHeader>
               <CCardBody>
-                <CChartDoughnut data={chart} />
+                <CChartDoughnut data={doughnutChart} />
               </CCardBody>
             </CCard>
           </CCol>
 
           <CCol xs={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Age Range</CCardHeader>
+              <CCardHeader>NIC New or Old Pie Chart</CCardHeader>
               <CCardBody>
-                <CChartPie data={chart} />
+                <CChartPie data={pieChart} />
               </CCardBody>
             </CCard>
           </CCol>
 
           <CCol xs={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Age Range</CCardHeader>
+              <CCardHeader>Mobile Number Provider Polar Chart</CCardHeader>
               <CCardBody>
-                <CChartPolarArea data={chart} />
+                <CChartPolarArea data={polarChart} />
               </CCardBody>
             </CCard>
           </CCol>
