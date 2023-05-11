@@ -185,15 +185,17 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const birthday = filteredData.map((item) => item.birthday)
-    const bins = ['1960-1970', '1970-1980', '1980-1990', '1990-2000']
-    const labels = bins.map((bin) => bin)
+    const birthday = filteredData.map((item) => parseInt(item.birthday.substring(0, 4)))
+    const bins = [1960, 1970, 1980, 1990, 2000]
+    const labels = bins.map((bin, i) => {
+      return i < bins.length - 1 ? `${bin}-${bins[i + 1] - 1}` : `${bin}+`
+    })
 
     const data = labels.map((label, i) => {
-      const lowerBound = i === 0 ? 1960 : 1970
-      const upperBound = i === bins.length - 1 ? Infinity : 1980
-      const count = birthday.filter((birthday) => {
-        return birthday >= lowerBound && birthday < upperBound
+      const lowerBound = bins[i]
+      const upperBound = i === bins.length - 1 ? Infinity : bins[i + 1]
+      const count = birthday.filter((year) => {
+        return year >= lowerBound && year < upperBound
       }).length
       return count
     })
@@ -202,37 +204,45 @@ const Dashboard = () => {
     setLineChartData(data)
   }, [filteredData])
 
-  //Pie Chart for NIC
+  //Pie Chart for Mobile Number
   const pieChart = {
-    labels: pieChartLabels,
+    labels: polarChartLabels,
     datasets: [
       {
-        label: 'Birth Year Count',
-        backgroundColor: ['#41B883', '#E46651'],
-        data: pieChartData,
+        label: 'Mobile Numbers Count',
+        backgroundColor: ['#FF0094', '#FF6384', '#4BC0C0', '#FFCE56', '#E7E9ED'],
+        data: polarChartData,
       },
     ],
   }
 
   useEffect(() => {
-    const birthday = filteredData.map((item) => item.nic)
-    const bins = ['Old', 'New']
+    if (!filteredData || filteredData.length === 0) {
+      // If filteredData is empty or undefined, reset the chart data and labels
+      setPolarChartLabels([])
+      setPolarChartData([])
+      return
+    }
+
+    const gender = filteredData.map((item) => item.mobile)
+    const bins = ['070', '071', '075', '077', '078'] // Sort the bins in ascending order
     const labels = bins.map((bin) => bin)
 
     const data = labels.map((label, i) => {
-      const lowerBound = i === 0 ? 1960 : 1970
-      const upperBound = i === bins.length - 1 ? Infinity : 1980
-      const count = birthday.filter((birthday) => {
-        return birthday >= lowerBound && birthday < upperBound
+      const lowerBound = parseInt(bins[i])
+      const upperBound = i === bins.length - 1 ? Infinity : parseInt(bins[i + 1]) - 1
+      const count = gender.filter((mobile) => {
+        const mobileNumber = parseInt(mobile.substring(0, 3))
+        return mobileNumber >= lowerBound && mobileNumber <= upperBound
       }).length
       return count
     })
 
-    setPieChartLabels(labels)
-    setPieChartData(data)
+    setPolarChartLabels(labels)
+    setPolarChartData(data)
   }, [filteredData])
 
-  //Doughnut Chart for NIC
+  //Doughnut Chart for Gender
   const doughnutChart = {
     labels: doughnutChartLabels,
     datasets: [
@@ -245,49 +255,45 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const gender = filteredData.map((item) => item.gender)
+    const genders = filteredData.map((item) => item.gender)
     const bins = ['Male', 'Female']
     const labels = bins.map((bin) => bin)
 
     const data = labels.map((label, i) => {
-      const lowerBound = bins[i]
-      const upperBound = i === bins.length - 1 ? Infinity : bins[i + 1] - 1
-      const count = gender.filter((gender) => gender >= lowerBound && gender <= upperBound).length
+      const lowerBound = i === 0 ? 0 : bins[i - 1] + 1
+      const upperBound = bins[i]
+
+      const count = genders.filter((gender) => gender >= lowerBound && gender <= upperBound).length
       return count
     })
+
     setDoughnutChartLabels(labels)
     setDoughnutChartData(data)
   }, [filteredData])
 
   //Polar Chart for NIC
   const polarChart = {
-    labels: polarChartLabels,
+    labels: pieChartLabels,
     datasets: [
       {
-        label: 'Gender Count',
-        backgroundColor: '#1B2430',
-        borderColor: '#EEEEEE',
-        borderWidth: 2,
-        hoverBackgroundColor: '#51557E',
-        hoverBorderColor: '#EEEEEE',
-        data: polarChartData,
+        label: 'NIC New or Old Count',
+        backgroundColor: ['#41B883', '#E46651'],
+        data: pieChartData,
       },
     ],
   }
 
   useEffect(() => {
-    const gender = filteredData.map((item) => item.mobile)
-    const bins = ['078', '077']
-    const labels = bins.map((bin) => bin)
-
-    const data = labels.map((label, i) => {
-      const lowerBound = bins[i]
-      const upperBound = i === bins.length - 1 ? Infinity : bins[i + 1] - 1
-      const count = gender.filter((gender) => gender >= lowerBound && gender <= upperBound).length
-      return count
+    const oldNIC = filteredData.filter((item) => {
+      return item.nic.length === 10 // old NICs have a length of 10
     })
-    setPolarChartLabels(labels)
-    setPolarChartData(data)
+    const newNIC = filteredData.filter((item) => {
+      return item.nic.length === 12 // new NICs have a length of 12
+    })
+    const labels = ['Old NIC', 'New NIC']
+    const data = [oldNIC.length, newNIC.length]
+    setPieChartLabels(labels)
+    setPieChartData(data)
   }, [filteredData])
 
   return (
@@ -396,7 +402,7 @@ const Dashboard = () => {
 
           <CCol xs={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>NIC New or Old Pie Chart</CCardHeader>
+              <CCardHeader> Mobile Number Provider Pie Chart</CCardHeader>
               <CCardBody>
                 <CChartPie data={pieChart} />
               </CCardBody>
@@ -405,7 +411,7 @@ const Dashboard = () => {
 
           <CCol xs={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Mobile Number Provider Polar Chart</CCardHeader>
+              <CCardHeader>NIC New or Old Polar Chart</CCardHeader>
               <CCardBody>
                 <CChartPolarArea data={polarChart} />
               </CCardBody>
