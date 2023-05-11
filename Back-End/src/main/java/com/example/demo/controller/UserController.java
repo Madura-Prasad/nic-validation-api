@@ -73,35 +73,6 @@ public class UserController {
 	}
 	
 	
-//	@GetMapping("/nicCount")
-//	public ResponseEntity<Object> getNic(User user) {
-//		return ResponseHandler.responseBuilder("NIC Range Here!!!", HttpStatus.OK, userRepo.getCountNIC());
-//	}
-//	
-//	
-//	@GetMapping("/mobileCount")
-//	public ResponseEntity<Object> getMobile(User user) {
-//		return ResponseHandler.responseBuilder("Mobile Number Range Here!!!", HttpStatus.OK, userRepo.getCountMobile());
-//	}
-//	
-//	@GetMapping("/genderCount")
-//	public ResponseEntity<Object> getGender(User user) {
-//		return ResponseHandler.responseBuilder("Gender Range Here!!!", HttpStatus.OK, userRepo.getCountGender());
-//	}
-//	
-//	@GetMapping("/ageCount")
-//	public ResponseEntity<Object> getAge(User user) {
-//		return ResponseHandler.responseBuilder("Age Range Here!!!", HttpStatus.OK, userRepo.getCountAge());
-//	}
-//	
-//	@GetMapping("/birthYearCount")
-//	public ResponseEntity<Object> getBirthYear(User user) {
-//		return ResponseHandler.responseBuilder("Birth Year Range Here!!!", HttpStatus.OK, userRepo.getCountBirthYear());
-//	}
-	
-	
-	
-	
 	 @GetMapping("/filter")
 	    public ResponseEntity<List<User>> searchUsers(
 	            @RequestParam(name = "full_name", required = false) String full_name,
