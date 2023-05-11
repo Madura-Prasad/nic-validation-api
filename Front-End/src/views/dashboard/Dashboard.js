@@ -140,10 +140,10 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'Ages Count',
-        backgroundColor: '#1B2430',
+        backgroundColor: '#433751',
         borderColor: '#EEEEEE',
-        borderWidth: 2,
-        hoverBackgroundColor: '#51557E',
+        borderWidth: 1,
+        hoverBackgroundColor: '#2F576E',
         hoverBorderColor: '#EEEEEE',
         data: barChartData,
       },
@@ -174,11 +174,11 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'Birth Year Count',
-        backgroundColor: '#1B2430',
-        borderColor: '#EEEEEE',
-        borderWidth: 2,
-        hoverBackgroundColor: '#51557E',
-        hoverBorderColor: '#EEEEEE',
+        backgroundColor: '#222831',
+        borderColor: '#00ADB5',
+        borderWidth: 1,
+        hoverBackgroundColor: '#222831',
+        hoverBorderColor: '#00ADB5',
         data: lineChartData,
       },
     ],
@@ -210,7 +210,8 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'Mobile Numbers Count',
-        backgroundColor: ['#FF0094', '#FF6384', '#4BC0C0', '#FFCE56', '#E7E9ED'],
+        borderWidth: 1,
+        backgroundColor: ['#1A2F4B', '#28475C', '#2F8886', '#84C69B', '#E23E57'],
         data: polarChartData,
       },
     ],
@@ -277,7 +278,8 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'NIC New or Old Count',
-        backgroundColor: ['#41B883', '#E46651'],
+        borderWidth: 1,
+        backgroundColor: ['#26282B', '#5F85DB'],
         data: pieChartData,
       },
     ],
@@ -299,81 +301,65 @@ const Dashboard = () => {
   return (
     <CRow>
       <CCol>
-        <CCol>
+        <CCol xs={12}>
           <CCard>
-            <CCardHeader>
-              <input
-                type="text"
-                placeholder="Search by Name"
-                onChange={handleNameFilter}
-                style={{
-                  marginRight: '20px',
-                  borderColor: 'black',
-                  borderRadius: '7.5px',
-                  textAlign: 'center',
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Search by Age"
-                onChange={handleAgeFilter}
-                style={{
-                  marginRight: '20px',
-                  borderColor: 'black',
-                  borderRadius: '7.5px',
-                  textAlign: 'center',
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Search by Gender"
-                onChange={handleGenderFilter}
-                style={{
-                  marginRight: '20px',
-                  borderColor: 'black',
-                  borderRadius: '7.5px',
-                  textAlign: 'center',
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Search by Mobile"
-                onChange={handleMobileFilter}
-                style={{
-                  marginRight: '20px',
-                  borderColor: 'black',
-                  borderRadius: '7.5px',
-                  textAlign: 'center',
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Search by Address"
-                onChange={handleAddressFilter}
-                style={{
-                  marginRight: '20px',
-                  borderColor: 'black',
-                  borderRadius: '7.5px',
-                  textAlign: 'center',
-                }}
-              />
-              <input
-                type="text"
-                placeholder="Search by Nationality"
-                onChange={handleNationalityFilter}
-                style={{
-                  marginRight: '20px',
-                  borderColor: 'black',
-                  borderRadius: '7.5px',
-                  textAlign: 'center',
-                }}
-              />
+            <CCardHeader className="bg-secondary p-3" xs={12}>
+              <div className="row">
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Search by Name"
+                    onChange={handleNameFilter}
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                  <input
+                    type="number"
+                    placeholder="Search by Age"
+                    onChange={handleAgeFilter}
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Search by Gender"
+                    onChange={handleGenderFilter}
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                  <input
+                    type="number"
+                    placeholder="Search by Mobile"
+                    onChange={handleMobileFilter}
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Search by Address"
+                    onChange={handleAddressFilter}
+                    className="form-control"
+                  />
+                </div>
+                <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-3">
+                  <input
+                    type="text"
+                    placeholder="Search by Nationality"
+                    onChange={handleNationalityFilter}
+                    className="form-control"
+                  />
+                </div>
+              </div>
             </CCardHeader>
           </CCard>
         </CCol>
 
         <CRow>
-          <CCol xs={6}>
+          <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
               <CCardHeader>Age Bar Chart</CCardHeader>
               <CCardBody>
@@ -382,7 +368,7 @@ const Dashboard = () => {
             </CCard>
           </CCol>
 
-          <CCol xs={6}>
+          <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
               <CCardHeader>Birth Line Chart</CCardHeader>
               <CCardBody>
@@ -391,7 +377,7 @@ const Dashboard = () => {
             </CCard>
           </CCol>
 
-          <CCol xs={6}>
+          <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
               <CCardHeader>Gender Doughnut Chart</CCardHeader>
               <CCardBody>
@@ -400,7 +386,7 @@ const Dashboard = () => {
             </CCard>
           </CCol>
 
-          <CCol xs={6}>
+          <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
               <CCardHeader> Mobile Number Provider Pie Chart</CCardHeader>
               <CCardBody>
@@ -409,7 +395,7 @@ const Dashboard = () => {
             </CCard>
           </CCol>
 
-          <CCol xs={6}>
+          <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
               <CCardHeader>NIC New or Old Polar Chart</CCardHeader>
               <CCardBody>
