@@ -204,13 +204,13 @@ const Dashboard = () => {
     setLineChartData(data)
   }, [filteredData])
 
-  //Pie Chart for Gender
+  //Pie Chart for Nationality
   const pieChart = {
     labels: pieChartLabels,
     datasets: [
       {
         label: 'Nationality Count',
-        backgroundColor: ['#245953', '#408E91', '#E49393', '#19A7CE'],
+        backgroundColor: ['#245953', '#FF0000', '#E49393', '#19A7CE', '#4E9F3D'],
         data: pieChartData,
       },
     ],
@@ -218,7 +218,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const nationalities = filteredData.map((item) => item.nationality)
-    const bins = ['Sinhalese', 'Burger', 'Tamil', 'Muslim']
+    const bins = ['Sinhalese', 'Burger', 'Tamil', 'Muslim', 'Buddhism']
     const labels = bins.map((bin) => bin)
 
     const data = labels.map((label, i) => {
@@ -237,7 +237,7 @@ const Dashboard = () => {
       {
         label: 'Mobile Numbers Count',
         borderWidth: 1,
-        backgroundColor: ['#21325E', '#28475C', '#C69749', '#84C69B', '#E23E57'],
+        backgroundColor: ['#21325E', '#F4EEE0', '#C69749', '#84C69B', '#E23E57'],
         data: doughnutChartData,
       },
     ],
@@ -275,7 +275,7 @@ const Dashboard = () => {
       {
         label: 'NIC New or Old Count',
         borderWidth: 1,
-        backgroundColor: ['#26282B', '#5F85DB'],
+        backgroundColor: ['#C69749', '#5F85DB'],
         data: polarChartData,
       },
     ],
@@ -357,9 +357,18 @@ const Dashboard = () => {
         <CRow>
           <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader>Age Bar Chart</CCardHeader>
+              <CCardHeader> Mobile Number Provider Doughnut Chart</CCardHeader>
               <CCardBody>
-                <CChartBar data={barChart} />
+                <CChartDoughnut data={doughnutChart} />
+              </CCardBody>
+            </CCard>
+          </CCol>
+
+          <CCol xs={12} lg={6}>
+            <CCard className="mb-4 mt-4">
+              <CCardHeader> Nationality Pie Chart</CCardHeader>
+              <CCardBody>
+                <CChartPie data={pieChart} />
               </CCardBody>
             </CCard>
           </CCol>
@@ -375,18 +384,9 @@ const Dashboard = () => {
 
           <CCol xs={12} lg={6}>
             <CCard className="mb-4 mt-4">
-              <CCardHeader> Mobile Number Provider Doughnut Chart</CCardHeader>
+              <CCardHeader>Age Bar Chart</CCardHeader>
               <CCardBody>
-                <CChartDoughnut data={doughnutChart} />
-              </CCardBody>
-            </CCard>
-          </CCol>
-
-          <CCol xs={12} lg={6}>
-            <CCard className="mb-4 mt-4">
-              <CCardHeader> Nationality Pie Chart</CCardHeader>
-              <CCardBody>
-                <CChartPie data={pieChart} />
+                <CChartBar data={barChart} />
               </CCardBody>
             </CCard>
           </CCol>
