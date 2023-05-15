@@ -210,15 +210,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: 'Nationality Count',
-        backgroundColor: [
-          '#245953',
-          '#FF0000',
-          '#E49393',
-          '#19A7CE',
-          '#4E9F3D',
-          '#2C3333',
-          '#C69749',
-        ],
+        backgroundColor: ['#245953', '#FF0000', '#E49393', '#19A7CE', '#4E9F3D'],
         data: pieChartData,
       },
     ],
@@ -226,7 +218,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     const nationalities = filteredData.map((item) => item.nationality)
-    const bins = ['Sinhalese', 'Burger', 'Tamil', 'Muslim', 'Buddhism', 'Islam', 'Christian']
+    const bins = ['Sinhalese', 'Burger', 'Tamil', 'Muslim', 'Christian']
     const labels = bins.map((bin) => bin)
 
     const data = labels.map((label, i) => {
