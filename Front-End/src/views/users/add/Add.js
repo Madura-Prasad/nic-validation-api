@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { CButton } from '@coreui/react'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function AddUser() {
-  let navigate = useNavigate()
-
   const [user, SetUser] = useState({
     full_name: '',
     mobile: '',
@@ -31,7 +32,7 @@ export default function AddUser() {
     e.preventDefault()
     if (validateFields()) {
       await axios.post('http://localhost:8070/api/v1/saveUser', user)
-      navigate('/users/view')
+      toast.success('User details added successfully!', { position: 'top-right', autoClose: 5000 })
     }
   }
 
@@ -168,10 +169,10 @@ export default function AddUser() {
               />
               {error.nic && <div className="text-danger fw-semibold">{error.nic}</div>}
             </div>
-            <button type="submit" className="btn btn-outline-success px-4 fw-bold mx-2">
-              Add
-            </button>
-            <Link to={'/users/view'} className="btn btn-outline-danger fw-bold">
+            <CButton className="fw-bold m-2" type="submit">
+              <ToastContainer /> Adds
+            </CButton>
+            <Link to={'/'} className="btn btn-outline-danger fw-bold m-2">
               Cancel
             </Link>
           </form>
